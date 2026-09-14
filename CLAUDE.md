@@ -37,12 +37,23 @@ Paleta corporativa (tokens en `src/styles/global.css`, no usar hex sueltos en co
 | Rol | Token | HEX | Uso |
 |---|---|---|---|
 | Principal 60% | `--primary` | `#1A2942` | hero, footer, títulos, panel "Nosotros" |
-| Secundario 30% | `--secondary` | `#A7B0BF` | texto sobre fondo oscuro, portadas, cara del cubo |
-| Acento 10% | `--accent` | `#FF6B35` | botones, eyebrows, "pool" del logotipo |
+| Secundario 30% | `--secondary` | `#A7B0BF` | texto sobre fondo oscuro, portadas |
+| Acento 10% | `--accent` | `#FF6B35` | botones, eyebrows, punto del isotipo |
 | Acento texto | `--accent-dark` | `#D9501F` | naranja para texto pequeño sobre blanco (contraste AA) |
 | Neutro | `--neutral` | `#F7F9FC` | fondo de secciones alternas |
 
-Logotipo en `public/brand/`: `bimpool-isotipo.svg` (cubo isométrico), `bimpool-logo-horizontal.svg`
-(fondo claro) y `bimpool-logo-horizontal-blanco.svg` (fondo oscuro). El wordmark usa texto SVG con
-Inter; para imprenta conviene convertirlo a trazados. `public/logo.svg` y `favicon.svg` son copias
-del isotipo.
+Tipografía del sitio: **DM Sans** (Google Fonts), la misma del wordmark.
+
+### Logotipo «Origen»
+
+Isotipo: tres ejes (X/Y/Z en isométrica) que nacen de un punto naranja. Wordmark: `bimpool` en
+minúsculas, DM Sans 500, tracking −3,5 %, **convertido a trazados** (no depende de la fuente).
+
+Kit en `public/brand/` — todo generado por un script, no editar a mano:
+- `bimpool-isotipo{,-blanco,-mono,-tile}.svg` — solo, sobre oscuro, un color, y en tile navy (favicon / app).
+- `bimpool-logo-horizontal{,-blanco,-mono,-mono-blanco}.svg` — lockup principal.
+- `bimpool-logo-vertical{,-blanco}.svg` — isotipo sobre wordmark.
+- PNG de alta resolución de los principales; `og-image.png` (1200×630) en `public/`.
+
+Regenerar: el script está en `tools/brandkit/build.js` (Node + opentype.js + sharp; necesita
+`dmsans500.ttf` al lado). `node build.js ../../public/brand` reescribe todo el kit.

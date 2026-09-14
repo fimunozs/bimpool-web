@@ -15,7 +15,7 @@
   --bg-soft: var(--neutral);
   --radius: 14px;
   --max: 1160px;
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
