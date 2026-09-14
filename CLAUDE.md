@@ -20,10 +20,9 @@ npm run preview  # sirve dist/
 
 ## Pendientes de contenido (buscar y reemplazar)
 
-- `contacto@bimpool.cl`, `+56 9 0000 0000` / `wa.me/56900000000` — datos reales.
+- `contacto@bimpool.cl` — correo real (el WhatsApp +56 9 4188 2458 ya es el real).
 - `Contact.astro` → `FORM_ENDPOINT`: poner el id de Formspree; hasta entonces el form usa `mailto:`.
 - `Projects.astro` — proyectos y fotos reales (las portadas son placeholders de color).
-- `Hero.astro` → `stats` — cifras reales.
 - `astro.config.mjs` → `site` — dominio definitivo.
 
 ## Deploy
