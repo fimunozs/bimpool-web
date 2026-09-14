@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64">
+  <title>BIMpool</title>
+  <rect width="64" height="64" rx="14" fill="#1a2942"/>
+  <polygon points="32,12 50,22 32,32 14,22" fill="#ff6b35"/>
+  <polygon points="14,22 32,32 32,52 14,42" fill="#a7b0bf"/>
+  <polygon points="32,32 50,22 50,42 32,52" fill="#f7f9fc"/>
+  <text x="80" y="44" font-family="Inter, system-ui, Segoe UI, Roboto, sans-serif" font-size="34" letter-spacing="-0.5">
+    <tspan fill="#ffffff" font-weight="500">BIM</tspan><tspan fill="#ff6b35" font-weight="800">pool</tspan>
+  </text>
+</svg>

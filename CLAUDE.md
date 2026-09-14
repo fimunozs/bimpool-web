@@ -29,3 +29,20 @@ npm run preview  # sirve dist/
 ## Deploy
 
 Vercel detecta Astro automáticamente (`npm run build`, output `dist/`). No necesita adapter.
+
+## Identidad visual
+
+Paleta corporativa (tokens en `src/styles/global.css`, no usar hex sueltos en componentes):
+
+| Rol | Token | HEX | Uso |
+|---|---|---|---|
+| Principal 60% | `--primary` | `#1A2942` | hero, footer, títulos, panel "Nosotros" |
+| Secundario 30% | `--secondary` | `#A7B0BF` | texto sobre fondo oscuro, portadas, cara del cubo |
+| Acento 10% | `--accent` | `#FF6B35` | botones, eyebrows, "pool" del logotipo |
+| Acento texto | `--accent-dark` | `#D9501F` | naranja para texto pequeño sobre blanco (contraste AA) |
+| Neutro | `--neutral` | `#F7F9FC` | fondo de secciones alternas |
+
+Logotipo en `public/brand/`: `bimpool-isotipo.svg` (cubo isométrico), `bimpool-logo-horizontal.svg`
+(fondo claro) y `bimpool-logo-horizontal-blanco.svg` (fondo oscuro). El wordmark usa texto SVG con
+Inter; para imprenta conviene convertirlo a trazados. `public/logo.svg` y `favicon.svg` son copias
+del isotipo.
