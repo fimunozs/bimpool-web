@@ -1,9 +1,9 @@
 # bimpool — textos para la página de empresa de LinkedIn
 
 ## Eslogan (máx. 120 caracteres)
-Modelos BIM que resuelven el proyecto antes de llegar a obra. Modelado, coordinación, documentación y automatización en Revit.
+Precisión en el modelo, control en la obra. Modelado, coordinación, documentación y automatización BIM.
 
-(118 caracteres)
+(104 caracteres)
 
 ## Acerca de (máx. 2000 caracteres)
 bimpool es un equipo de especialistas BIM que trabaja como extensión de oficinas de arquitectura, ingeniería y constructoras.

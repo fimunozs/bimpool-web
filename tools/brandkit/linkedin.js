@@ -57,7 +57,7 @@ function logoSquare(size = 400) {
 function cover() {
   const W = 2256, H = 382;
   const wm = textPath("bimpool", 120);
-  const tag = textPath("Modelos BIM que resuelven el proyecto antes de llegar a obra", 40, -0.01);
+  const tag = textPath("Precisión en el modelo, control en la obra.", 44, -0.01);
   const sub = textPath("Modelado · Coordinación · Documentación · Automatización", 28, 0.02);
   const right = W - 120;
   const wmX = right - wm.w - wm.bb.x1, wmY = 112 - wm.bb.y1;   // ascendentes en y=112
