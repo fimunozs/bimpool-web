@@ -1,0 +1,190 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "BIMpool — Servicios BIM para arquitectura, ingeniería y construcción",
+  description =
+    "Modelado, coordinación y documentación BIM en Revit. Automatización con pyRevit y Dynamo. Menos errores en obra, más control del proyecto.",
+} = Astro.props;
+
+const nav = [
+  { href: "#servicios", label: "Servicios" },
+  { href: "#proceso", label: "Proceso" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#nosotros", label: "Nosotros" },
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__inner">
+        <a href="#top" class="brand" aria-label="BIMpool, inicio">
+          <img src="/logo.svg" alt="" width="36" height="36" />
+          <span>BIM<strong>pool</strong></span>
+        </a>
+        <nav class="nav" aria-label="Principal">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+        <a href="#contacto" class="btn btn--primary header__cta">Hablemos</a>
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nav-mobile" aria-label="Principal móvil">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <a href="#top" class="brand brand--light">
+            <img src="/logo.svg" alt="" width="32" height="32" />
+            <span>BIM<strong>pool</strong></span>
+          </a>
+          <p class="footer__tag">Servicios BIM · Santiago, Chile</p>
+        </div>
+        <div class="footer__cols">
+          <div>
+            <h4>Sitio</h4>
+            {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+            <a href="#contacto">Contacto</a>
+          </div>
+          <div>
+            <h4>Contacto</h4>
+            <a href="mailto:contacto@bimpool.cl">contacto@bimpool.cl</a>
+            <a href="https://wa.me/56900000000" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="container footer__legal">
+        © {new Date().getFullYear()} BIMpool. Todos los derechos reservados.
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const menu = document.querySelector<HTMLElement>(".nav-mobile");
+      btn?.addEventListener("click", () => {
+        const open = menu?.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(!!open));
+      });
+      menu?.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          menu.classList.remove("is-open");
+          btn?.setAttribute("aria-expanded", "false");
+        })
+      );
+    </script>
+  </body>
+</html>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 72px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  .brand strong { font-weight: 800; color: var(--pool-dark); }
+  .brand--light { color: #fff; }
+  .brand--light strong { color: var(--pool); }
+  .nav { display: flex; gap: 1.75rem; margin-left: auto; }
+  .nav a { font-weight: 500; color: var(--ink); font-size: 0.95rem; }
+  .nav a:hover { color: var(--pool-dark); }
+  .header__cta { padding-block: 0.6rem; }
+
+  .menu-toggle {
+    display: none;
+    margin-left: auto;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    margin: 5px 0;
+  }
+  .nav-mobile {
+    display: none;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+  .nav-mobile a { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--line); font-weight: 500; }
+  .nav-mobile.is-open { display: flex; }
+
+  @media (max-width: 820px) {
+    .nav, .header__cta { display: none; }
+    .menu-toggle { display: block; }
+  }
+
+  .footer { background: var(--navy); color: #c9d3e6; padding-top: 3.5rem; }
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-bottom: 2.5rem;
+  }
+  .footer__tag { margin-top: 0.75rem; font-size: 0.9rem; }
+  .footer__cols { display: flex; gap: 4rem; flex-wrap: wrap; }
+  .footer__cols h4 { color: #fff; margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .footer__cols a { display: block; font-size: 0.95rem; margin-bottom: 0.45rem; }
+  .footer__cols a:hover { color: #fff; }
+  .footer__legal {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-block: 1.25rem;
+    font-size: 0.85rem;
+  }
+</style>

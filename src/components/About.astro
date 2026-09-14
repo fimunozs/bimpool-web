@@ -1,0 +1,73 @@
+---
+const points = [
+  "Equipo con experiencia en oficina de arquitectura, cálculo y obra: hablamos el idioma de cada especialidad.",
+  "Usamos Revit como plataforma principal e integramos Navisworks, Dynamo y pyRevit para automatizar lo repetitivo.",
+  "Estándares alineados a ISO 19650 y a los requerimientos BIM del sector público chileno (Planbim).",
+  "Trabajamos con modelos compartidos (worksharing) y control de versiones, de modo que tu equipo siempre ve lo mismo que nosotros.",
+];
+---
+
+<section id="nosotros" class="section section--soft">
+  <div class="container about">
+    <div class="about__copy">
+      <span class="eyebrow">Nosotros</span>
+      <h2>Somos el pool de especialistas BIM que tu proyecto no necesita contratar a tiempo completo</h2>
+      <p class="about__lead">
+        BIMpool nace para que oficinas y constructoras accedan a un equipo BIM senior por
+        proyecto, con la flexibilidad de escalar según la etapa y sin perder continuidad.
+      </p>
+      <ul class="about__list">
+        {points.map((p) => (
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <aside class="about__panel">
+      <h3>Software y estándares</h3>
+      <ul class="tools">
+        <li>Revit 2022–2025</li>
+        <li>Navisworks</li>
+        <li>Dynamo</li>
+        <li>pyRevit / API</li>
+        <li>BIM 360 / ACC</li>
+        <li>ISO 19650</li>
+        <li>Planbim</li>
+        <li>IFC</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--navy); }
+  .about__lead { margin-top: 1rem; color: var(--muted); font-size: 1.05rem; }
+  .about__list { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 0.9rem; }
+  .about__list li { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .about__list svg { flex: none; width: 22px; height: 22px; color: var(--pool-dark); margin-top: 0.15rem; }
+  .about__panel {
+    background: var(--navy);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+  .about__panel h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pool); margin-bottom: 1.25rem; }
+  .tools { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .tools li {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; }
+  }
+</style>

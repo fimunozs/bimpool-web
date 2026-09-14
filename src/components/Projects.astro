@@ -1,0 +1,86 @@
+---
+const projects = [
+  {
+    tag: "Salud",
+    title: "Clínica y centro médico dental",
+    meta: "Arquitectura · Estructura · Documentación · 4 edificios",
+    text: "Modelos vinculados por especialidad, láminas de recinto tipo y layouts eléctricos generados con automatización sobre el modelo.",
+    tone: "a",
+  },
+  {
+    tag: "Residencial",
+    title: "Edificio habitacional 18 pisos",
+    meta: "Coordinación MEP · Clash detection",
+    text: "Coordinación de instalaciones con reportes semanales; interferencias críticas resueltas antes de la ejecución de losas.",
+    tone: "b",
+  },
+  {
+    tag: "Industrial",
+    title: "Planta logística y oficinas",
+    meta: "Modelado STR · Cubicación",
+    text: "Modelo estructural en LOD 400 con tablas de cantidades para licitación y control de avance de obra.",
+    tone: "c",
+  },
+];
+---
+
+<section id="proyectos" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Proyectos</span>
+      <h2>Experiencia en distintos tipos de edificación</h2>
+      <p>Una muestra de lo que hemos modelado y coordinado. Podemos compartir más casos bajo acuerdo de confidencialidad.</p>
+    </div>
+    <div class="grid grid--3">
+      {projects.map((p) => (
+        <article class="project">
+          <div class={`project__cover project__cover--${p.tone}`}>
+            <span class="project__tag">{p.tag}</span>
+          </div>
+          <div class="project__body">
+            <h3>{p.title}</h3>
+            <span class="project__meta">{p.meta}</span>
+            <p>{p.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .project {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #fff;
+  }
+  .project__cover {
+    aspect-ratio: 16 / 10;
+    position: relative;
+    background-size: 24px 24px;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px);
+  }
+  .project__cover--a { background-color: #12305a; }
+  .project__cover--b { background-color: #0b8fb0; }
+  .project__cover--c { background-color: #2b4a75; }
+  .project__tag {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    background: rgba(255,255,255,0.92);
+    color: var(--navy);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .project__body { padding: 1.5rem; }
+  .project__body h3 { font-size: 1.15rem; color: var(--navy); }
+  .project__meta { display: block; font-size: 0.82rem; color: var(--pool-dark); font-weight: 600; margin: 0.4rem 0 0.75rem; }
+  .project__body p { color: var(--muted); font-size: 0.95rem; }
+</style>
