@@ -1,5 +1,6 @@
 ---
 import { proyectos } from "../data/proyectos.js";
+import Experiencia from "./Experiencia.astro";
 
 // lista plana para el visor: cada botón guarda el índice de proyecto y el de vista
 const visor = proyectos.map((p) => p.vistas);
@@ -103,6 +104,8 @@ const visor = proyectos.map((p) => p.vistas);
         </div>
       );
     })}
+
+    <Experiencia />
   </div>
 
   <div class="visor" hidden>
