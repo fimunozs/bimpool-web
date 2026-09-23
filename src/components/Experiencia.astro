@@ -1,45 +1,31 @@
 ---
-import { experiencia } from "../data/experiencia.js";
+import { proyectosPrevios, foto } from "../data/experiencia.js";
 
-// ¿existe la foto en public/? si no, el bloque se arma igual, solo sin imagen
+// la foto se muestra solo si el archivo existe en public/experiencia/
 const fotos = import.meta.glob("/public/experiencia/*.webp", { eager: true });
-const hay = (ruta) => Object.keys(fotos).some((k) => k.endsWith(ruta));
+const hayFoto = Object.keys(fotos).some((k) => k.endsWith(foto.src));
 ---
 
-<div class="exp">
-  <div class="exp__head">
+<div class:list={["exp", hayFoto && "exp--con-foto"]}>
+  <div class="exp__texto">
     <h4>De dónde viene el equipo</h4>
     <p>
-      Antes de bimpool, los mismos modeladores trabajaron dentro de los equipos de IDOM y
-      GITC. Los proyectos de abajo <strong>no son encargos de bimpool</strong>: son la
+      Antes de bimpool, los mismos modeladores participaron en estos proyectos dentro del
+      equipo de otras oficinas. <strong>No son encargos de bimpool</strong>: son la
       experiencia de quienes hoy modelan aquí.
     </p>
+
+    <ul class="exp__lista">
+      {proyectosPrevios.map((p) => <li>{p}</li>)}
+    </ul>
   </div>
 
-  <div class="exp__grid">
-    {experiencia.map((e) => (
-      <article class="exp__item">
-        <header>
-          <img class="exp__logo" src={e.logo} alt={e.empresa} loading="lazy" decoding="async" />
-          <div>
-            <strong>{e.rol}</strong>
-            <span>{e.periodo} · {e.lugar}</span>
-          </div>
-        </header>
-
-        {e.foto && hay(e.foto) && (
-          <figure class="exp__foto">
-            <img src={e.foto} alt={e.pie} loading="lazy" decoding="async" />
-            <figcaption>{e.pie}</figcaption>
-          </figure>
-        )}
-
-        <ul>
-          {e.proyectos.map((p) => <li>{p}</li>)}
-        </ul>
-      </article>
-    ))}
-  </div>
+  {hayFoto && (
+    <figure class="exp__foto">
+      <img src={foto.src} alt={foto.pie} loading="lazy" decoding="async" />
+      <figcaption>{foto.pie}</figcaption>
+    </figure>
+  )}
 </div>
 
 <style>
@@ -48,47 +34,50 @@ const hay = (ruta) => Object.keys(fotos).some((k) => k.endsWith(ruta));
     padding-top: 3rem;
     border-top: 1px solid var(--line);
   }
-  .exp__head { max-width: 62ch; margin-bottom: 2.25rem; }
-  .exp__head h4 {
+  .exp--con-foto {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .exp__texto h4 {
     margin: 0 0 0.6rem;
     font-size: 1.05rem;
     color: var(--primary);
   }
-  .exp__head p { color: var(--muted); font-size: 0.95rem; }
-  .exp__head strong { color: var(--primary); font-weight: 600; }
-
-  .exp__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  .exp__item {
-    background: var(--neutral);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-  }
-  .exp__item header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .exp__logo { height: 18px; width: auto; opacity: 0.7; flex: none; }
-  .exp__item header strong {
-    display: block;
-    font-size: 0.92rem;
-    color: var(--primary);
-  }
-  .exp__item header span {
-    display: block;
-    font-size: 0.78rem;
+  .exp__texto > p {
     color: var(--muted);
-    margin-top: 0.1rem;
+    font-size: 0.95rem;
+    max-width: 62ch;
+  }
+  .exp__texto strong { color: var(--primary); font-weight: 600; }
+
+  .exp__lista {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.6rem 1.75rem;
+  }
+  .exp__lista li {
+    position: relative;
+    padding-left: 0.95rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .exp__lista li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.58em;
+    width: 5px;
+    height: 1px;
+    background: var(--accent);
   }
 
-  .exp__foto { margin: 1.25rem 0 0; }
+  .exp__foto { margin: 0; }
   .exp__foto img {
     width: 100%;
     height: auto;
@@ -104,26 +93,8 @@ const hay = (ruta) => Object.keys(fotos).some((k) => k.endsWith(ruta));
     line-height: 1.4;
   }
 
-  .exp__item ul {
-    list-style: none;
-    padding: 0;
-    margin: 1.25rem 0 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-  .exp__item li {
-    position: relative;
-    padding-left: 0.95rem;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-  .exp__item li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 4px;
-    height: 1px;
-    background: var(--secondary);
+  @media (max-width: 860px) {
+    .exp--con-foto { grid-template-columns: 1fr; gap: 1.75rem; }
+    .exp__foto { max-width: 320px; }
   }
 </style>
