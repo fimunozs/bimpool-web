@@ -19,8 +19,8 @@ export const proyectosPrevios = [
   { nombre: "Clínica Dental Manquehue" },
   { nombre: "Edificios Plaza Dinamarca", foto: "/experiencia/plaza-dinamarca.webp" },
   { nombre: "Aldea Sakura" },
-  { nombre: "Casa Passalacqua-Lahsen" },
-  { nombre: "Casa El Maqui" },
-  { nombre: "Casa Chamisero" },
+  { nombre: "Casa Passalacqua-Lahsen", foto: "/experiencia/casa-passalacqua-lahsen.webp" },
+  { nombre: "Casa El Maqui", foto: "/experiencia/casa-el-maqui.webp" },
+  { nombre: "Casa Chamisero", foto: "/experiencia/casa-chamisero.webp" },
   { nombre: "Casa Las Hojas" },
 ];
