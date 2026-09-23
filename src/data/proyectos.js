@@ -12,7 +12,6 @@ export const proyectos = [
     portada: "EXT-NE",
     parrafos: [
       "Modelamos la arquitectura y la estructura del edificio: catorce niveles, desde los ocho subterráneos hasta la cubierta, con recintos clínicos, mobiliario y equipamiento médico modelados pieza por pieza.",
-      "Las vistas se generan desde el propio modelo con plantillas de vista, no como renders aparte. Cada planta se corta a la altura del nivel para revisar la distribución en tres dimensiones, y las cuatro esquinas exteriores muestran el volumen tal como se percibe desde la calle.",
     ],
     alcance: [
       { k: "Modelación", v: "Arquitectura y estructura del edificio, 14 niveles, con recintos clínicos, mobiliario y equipamiento médico." },
@@ -21,7 +20,7 @@ export const proyectos = [
     ],
     ficha: [
       { k: "Tipo", v: "Edificio clínico y dental" },
-      { k: "Especialidades", v: "Arquitectura y estructura" },
+      { k: "Especialidades", v: "Arquitectura + Estructura" },
       { k: "Niveles", v: "14, de subterráneo −8 a cubierta" },
       { k: "Estado", v: "En desarrollo" },
     ],
@@ -36,7 +35,6 @@ export const proyectos = [
     portada: "PAX",
     parrafos: [
       "Modelamos y coordinamos el sistema de corrientes débiles de los dieciséis edificios del recinto: desde el terminal de pasajeros y la torre de control hasta las subestaciones, el complejo de carga y los puestos de control.",
-      "Cada edificio se documenta con una axonometría donde el sistema se lee sobre la arquitectura y la estructura. Así el trazado de bandejas, los gabinetes y los puntos se revisan —y se corrigen— sobre el modelo, antes de que lleguen a terreno.",
     ],
     alcance: [
       { k: "Modelación", v: "Sistema de corrientes débiles de los 16 edificios: bandejas, gabinetes y puntos." },
