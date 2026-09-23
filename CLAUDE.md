@@ -25,23 +25,46 @@ npm run preview  # sirve dist/
 
 ## Proyectos del portafolio
 
-`src/components/Projects.astro` muestra un caso destacado más una galería con visor a
-pantalla completa (sin librerías: ~60 líneas de JS al final del componente).
+`src/data/proyectos.js` define los proyectos (textos, ficha, cliente, portada) e importa
+el manifiesto de vistas de cada uno. `src/components/Projects.astro` los recorre: caso
+destacado + galería + visor a pantalla completa compartido (sin librerías).
 
 Las imágenes **no se editan a mano**. El original vive en Google Drive
 (`WEBPAGE-BIMPOOL / 04_MULTIMEDIA / 02_RENDERS Y VISTAS / <proyecto>`) y se procesa con:
 
 ```bash
 cd tools/brandkit
-node proyecto-imagenes.js "<carpeta origen>" <slug>
+node proyecto-imagenes.js "<carpeta origen>" <slug> ["COD1,COD2,..."]
 ```
 
-El script recorta el blanco sobrante, exporta WebP en dos tamaños a
-`public/proyectos/<slug>/` y escribe `src/data/<slug>.json`, que es lo que importa el
-componente. Espera archivos con el patrón `<PROY>_<VISTA>_<CÓDIGO>_<Nombre>.png`.
+Recorta el blanco, exporta WebP en dos tamaños a `public/proyectos/<slug>/` y escribe
+`src/data/<slug>.json`. El tercer argumento fija el orden de la galería. Espera archivos
+`<PROY>_<VISTA>_<CÓDIGO>_<Nombre>.png`.
 
-Hoy hay un proyecto: **SCFA · Aeropuerto Andrés Sabella** (16 edificios, corrientes
-débiles, en desarrollo). El mandante no se nombra en el sitio a propósito.
+### Logotipos de cliente
+
+Cada proyecto muestra un cuadro pequeño con el logo del cliente. Se preparan con:
+
+```bash
+node logos-clientes.js gitc=<ruta> idom=<ruta>
+```
+
+que los recorta y los convierte en silueta negra sobre transparente (`public/clientes/`),
+para mostrarlos en gris al 75 % sin que peleen con la paleta. Los originales salieron de
+archivos del propio proyecto: **GITC** estaba embebido en la familia de rótulo del modelo
+(se extrae con `ImageType.GetImage()` tras `doc.EditFamily`), **IDOM** venía en los DWG
+de entrega. Copia de ambos en `WEBPAGE-BIMPOOL / 01_MARCA / 05_LOGOS CLIENTES`.
+
+### Proyectos publicados
+
+- **clinica** · Clínica y Centro Médico Dental, cliente GITC, arquitectura, 14 niveles.
+  Vistas generadas en Revit con las plantillas `bimpool_3D Exterior` / `bimpool_3D Interior`
+  (limpias, sin anotación ni topografía, vínculo STR visible, sombras heredadas de `{3D}`).
+  Cuatro perspectivas desde las esquinas del ViewCube + una axonometría cortada por nivel.
+  Las vistas quedan agrupadas en el navegador bajo `VISTAS 3D` (parámetro *Categoria Vista*).
+- **scfa** · Aeropuerto Andrés Sabella, cliente IDOM, corrientes débiles, 16 edificios.
+
+Ningún mandante final se nombra en el sitio: el cuadro muestra la oficina que contrata.
 
 ## Deploy
 

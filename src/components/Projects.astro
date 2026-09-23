@@ -1,15 +1,8 @@
 ---
-import vistas from "../data/scfa.json";
+import { proyectos } from "../data/proyectos.js";
 
-const ficha = [
-  { k: "Tipo", v: "Infraestructura aeroportuaria" },
-  { k: "Ubicación", v: "Antofagasta, Chile" },
-  { k: "Especialidad", v: "Corrientes débiles" },
-  { k: "Alcance", v: "Modelado y coordinación · 16 edificios" },
-  { k: "Estado", v: "En desarrollo" },
-];
-
-const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
+// lista plana para el visor: cada botón guarda el índice de proyecto y el de vista
+const visor = proyectos.map((p) => p.vistas);
 ---
 
 <section id="proyectos" class="section">
@@ -18,72 +11,89 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
       <span class="eyebrow">Proyectos</span>
       <h2>Lo que entregamos, visto en el modelo</h2>
       <p>
-        Una muestra del trabajo en curso. Podemos compartir más casos y el detalle de cada
-        entrega bajo acuerdo de confidencialidad.
+        Trabajo en curso, exportado desde los propios modelos. Podemos compartir más casos y
+        el detalle de cada entrega bajo acuerdo de confidencialidad.
       </p>
     </div>
 
-    <article class="caso">
-      <figure class="caso__portada">
-        <button
-          class="visor-abrir"
-          type="button"
-          data-i={vistas.indexOf(portada)}
-          aria-label={`Ampliar ${portada.nombre}`}
-        >
-          <img
-            src={portada.src}
-            alt={`Axonometría de corrientes débiles · ${portada.nombre}`}
-            width="1800"
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-        <figcaption>{portada.codigo} · {portada.nombre}</figcaption>
-      </figure>
+    {proyectos.map((p, pi) => {
+      const portada = p.vistas.find((v) => v.codigo === p.portada) ?? p.vistas[0];
+      return (
+        <div class="proyecto">
+          <article class="caso">
+            <figure class="caso__portada">
+              <button
+                class="visor-abrir"
+                type="button"
+                data-p={pi}
+                data-i={p.vistas.indexOf(portada)}
+                aria-label={`Ampliar ${portada.nombre}`}
+              >
+                <img
+                  src={portada.src}
+                  alt={`${p.titulo} · ${portada.nombre}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
+              <figcaption>{portada.codigo} · {portada.nombre}</figcaption>
+            </figure>
 
-      <div class="caso__info">
-        <span class="caso__tag">Aeropuerto</span>
-        <h3>Aeropuerto Andrés Sabella</h3>
-        <p class="caso__resumen">
-          Modelamos y coordinamos el sistema de corrientes débiles de los dieciséis edificios
-          del recinto: desde el terminal de pasajeros y la torre de control hasta las
-          subestaciones, el complejo de carga y los puestos de control.
-        </p>
-        <p class="caso__resumen">
-          Cada edificio se documenta con una axonometría donde el sistema se lee sobre la
-          arquitectura y la estructura. Así el trazado de bandejas, los gabinetes y los puntos
-          se revisan —y se corrigen— sobre el modelo, antes de que lleguen a terreno.
-        </p>
-        <dl class="caso__ficha">
-          {ficha.map((f) => (
-            <div>
-              <dt>{f.k}</dt>
-              <dd>{f.v}</dd>
+            <div class="caso__info">
+              <span class="caso__tag">{p.tag}</span>
+              <h3>{p.titulo}</h3>
+
+              <div class="cliente">
+                <span class="cliente__label">Cliente</span>
+                <img
+                  class="cliente__logo"
+                  src={p.cliente.logo}
+                  alt={p.cliente.nombre}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              {p.parrafos.map((t) => <p class="caso__resumen">{t}</p>)}
+
+              <dl class="caso__ficha">
+                {p.ficha.map((f) => (
+                  <div>
+                    <dt>{f.k}</dt>
+                    <dd>{f.v}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-          ))}
-        </dl>
-      </div>
-    </article>
+          </article>
 
-    <div class="galeria-head">
-      <h4>Los 16 edificios del recinto</h4>
-      <span>Toca una vista para ampliarla</span>
-    </div>
+          <div class="galeria-head">
+            <h4>{p.galeria}</h4>
+            <span>Toca una vista para ampliarla</span>
+          </div>
 
-    <ul class="galeria">
-      {vistas.map((v, i) => (
-        <li>
-          <button class="visor-abrir" type="button" data-i={i} aria-label={`Ampliar ${v.nombre}`}>
-            <img src={v.thumb} alt={`Axonometría · ${v.nombre}`} loading="lazy" decoding="async" />
-            <span class="galeria__pie">
-              <strong>{v.codigo}</strong>
-              {v.nombre}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
+          <ul class="galeria">
+            {p.vistas.map((v, i) => (
+              <li>
+                <button
+                  class="visor-abrir"
+                  type="button"
+                  data-p={pi}
+                  data-i={i}
+                  aria-label={`Ampliar ${v.nombre}`}
+                >
+                  <img src={v.thumb} alt={v.nombre} loading="lazy" decoding="async" />
+                  <span class="galeria__pie">
+                    <strong>{v.codigo}</strong>
+                    {v.nombre}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })}
   </div>
 
   <div class="visor" hidden>
@@ -97,50 +107,59 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
   </div>
 </section>
 
-<script define:vars={{ vistas }}>
-  const visor = document.querySelector(".visor");
-  const img = visor.querySelector("img");
-  const pie = visor.querySelector("figcaption");
-  let actual = 0;
+<script define:vars={{ visor }}>
+  const caja = document.querySelector(".visor");
+  const img = caja.querySelector("img");
+  const pie = caja.querySelector("figcaption");
+  let pAct = 0;
+  let iAct = 0;
 
-  const mostrar = (i) => {
-    actual = (i + vistas.length) % vistas.length;
-    const v = vistas[actual];
+  const mostrar = (p, i) => {
+    const lista = visor[p];
+    pAct = p;
+    iAct = (i + lista.length) % lista.length;
+    const v = lista[iAct];
     img.src = v.src;
-    img.alt = `Axonometría de corrientes débiles · ${v.nombre}`;
+    img.alt = v.nombre;
     pie.textContent = `${v.codigo} · ${v.nombre}`;
   };
 
-  const abrir = (i) => {
-    mostrar(i);
-    visor.hidden = false;
+  const abrir = (p, i) => {
+    mostrar(p, i);
+    caja.hidden = false;
     document.body.style.overflow = "hidden";
-    visor.querySelector(".visor__cerrar").focus();
+    caja.querySelector(".visor__cerrar").focus();
   };
 
   const cerrar = () => {
-    visor.hidden = true;
+    caja.hidden = true;
     document.body.style.overflow = "";
   };
 
   document.querySelectorAll(".visor-abrir").forEach((b) =>
-    b.addEventListener("click", () => abrir(Number(b.dataset.i)))
+    b.addEventListener("click", () => abrir(Number(b.dataset.p), Number(b.dataset.i)))
   );
-  visor.querySelector(".visor__cerrar").addEventListener("click", cerrar);
-  visor.querySelector(".visor__nav--prev").addEventListener("click", () => mostrar(actual - 1));
-  visor.querySelector(".visor__nav--next").addEventListener("click", () => mostrar(actual + 1));
-  visor.addEventListener("click", (e) => {
-    if (e.target === visor) cerrar();
+  caja.querySelector(".visor__cerrar").addEventListener("click", cerrar);
+  caja.querySelector(".visor__nav--prev").addEventListener("click", () => mostrar(pAct, iAct - 1));
+  caja.querySelector(".visor__nav--next").addEventListener("click", () => mostrar(pAct, iAct + 1));
+  caja.addEventListener("click", (e) => {
+    if (e.target === caja) cerrar();
   });
   document.addEventListener("keydown", (e) => {
-    if (visor.hidden) return;
+    if (caja.hidden) return;
     if (e.key === "Escape") cerrar();
-    if (e.key === "ArrowLeft") mostrar(actual - 1);
-    if (e.key === "ArrowRight") mostrar(actual + 1);
+    if (e.key === "ArrowLeft") mostrar(pAct, iAct - 1);
+    if (e.key === "ArrowRight") mostrar(pAct, iAct + 1);
   });
 </script>
 
 <style>
+  .proyecto + .proyecto {
+    margin-top: 4.5rem;
+    padding-top: 4.5rem;
+    border-top: 1px solid var(--line);
+  }
+
   /* ---------- caso destacado ---------- */
   .caso {
     display: grid;
@@ -153,12 +172,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     background: #fff;
   }
   .caso__portada { margin: 0; }
-  .caso__portada img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    background: #fff;
-  }
+  .caso__portada img { width: 100%; height: auto; border-radius: 8px; background: #fff; }
   .caso__portada figcaption {
     margin-top: 0.75rem;
     font-size: 0.78rem;
@@ -183,11 +197,35 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     color: var(--primary);
     letter-spacing: -0.015em;
   }
-  .caso__resumen {
-    margin-top: 1rem;
-    color: var(--muted);
-    font-size: 0.97rem;
+
+  /* ---------- cuadro de cliente ---------- */
+  .cliente {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.1rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--neutral);
+    width: fit-content;
   }
+  .cliente__label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-right: 0.85rem;
+    border-right: 1px solid var(--line);
+  }
+  .cliente__logo {
+    height: 20px;
+    width: auto;
+    opacity: 0.75;
+  }
+
+  .caso__resumen { margin-top: 1rem; color: var(--muted); font-size: 0.97rem; }
   .caso__ficha {
     margin: 1.75rem 0 0;
     display: grid;
@@ -207,12 +245,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     text-transform: uppercase;
     color: var(--muted);
   }
-  .caso__ficha dd {
-    margin: 0;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--primary);
-  }
+  .caso__ficha dd { margin: 0; font-size: 0.92rem; font-weight: 600; color: var(--primary); }
 
   /* ---------- galería ---------- */
   .galeria-head {
@@ -223,11 +256,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     flex-wrap: wrap;
     margin: 3rem 0 1.25rem;
   }
-  .galeria-head h4 {
-    margin: 0;
-    font-size: 1.05rem;
-    color: var(--primary);
-  }
+  .galeria-head h4 { margin: 0; font-size: 1.05rem; color: var(--primary); }
   .galeria-head span { font-size: 0.85rem; color: var(--muted); }
 
   .galeria {
@@ -254,7 +283,6 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     margin-bottom: 0.15rem;
   }
 
-  /* botón que envuelve cada imagen */
   .visor-abrir {
     display: block;
     width: 100%;
@@ -280,7 +308,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
   .caso__portada .visor-abrir { border: 0; border-radius: 8px; }
   .caso__portada .visor-abrir:hover { transform: none; }
 
-  /* ---------- visor a pantalla completa ---------- */
+  /* ---------- visor ---------- */
   .visor {
     position: fixed;
     inset: 0;
@@ -327,14 +355,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     line-height: 1;
     flex: none;
   }
-  .visor__cerrar {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 44px;
-    height: 44px;
-    font-size: 1.6rem;
-  }
+  .visor__cerrar { position: absolute; top: 1rem; right: 1rem; width: 44px; height: 44px; font-size: 1.6rem; }
   .visor__nav { width: 48px; height: 48px; font-size: 2rem; }
   .visor__cerrar:hover,
   .visor__nav:hover { background: var(--accent); }
@@ -343,6 +364,7 @@ const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
     .caso { grid-template-columns: 1fr; padding: 1.25rem; gap: 1.75rem; }
     .caso__ficha > div { grid-template-columns: 7rem 1fr; }
     .visor__nav { width: 40px; height: 40px; font-size: 1.5rem; }
+    .proyecto + .proyecto { margin-top: 3rem; padding-top: 3rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .visor-abrir { transition: none; }

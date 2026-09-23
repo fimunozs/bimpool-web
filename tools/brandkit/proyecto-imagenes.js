@@ -1,6 +1,6 @@
 // Optimiza las vistas 3D de un proyecto para la web y escribe el manifiesto que usa el sitio.
 //
-//   node proyecto-imagenes.js "<carpeta origen>" <slug>
+//   node proyecto-imagenes.js "<carpeta origen>" <slug> [COD1,COD2,...]
 //   node proyecto-imagenes.js "G:/Mi unidad/.../SCFA - Aeropuerto Andres Sabella" scfa
 //
 // Espera archivos con el patrón  <PROYECTO>_<VISTA>_<CÓDIGO>_<Nombre del edificio>.png
@@ -14,6 +14,8 @@ const sharp = require("sharp");
 
 const SRC = process.argv[2];
 const SLUG = process.argv[3];
+// orden de la galería: códigos en el orden deseado; el resto va alfabético al final
+const ORDEN = (process.argv[4] || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
 if (!SRC || !SLUG) {
   console.error('Uso: node proyecto-imagenes.js "<carpeta origen>" <slug>');
   process.exit(1);
@@ -67,8 +69,8 @@ const THUMB = 900;
     console.log(`${codigo.padEnd(4)} ${String(meta.width).padStart(5)}×${String(meta.height).padStart(5)}  ${nombre}`);
   }
 
-  // orden: primero los edificios principales, luego el resto alfabético
-  const destacados = ["PAX", "TWR", "LOG", "CCA", "ADM", "SEI"];
+  // orden: primero los códigos indicados, luego el resto alfabético
+  const destacados = ORDEN.length ? ORDEN : ["PAX", "TWR", "LOG", "CCA", "ADM", "SEI"];
   manifiesto.sort((a, b) => {
     const ia = destacados.indexOf(a.codigo), ib = destacados.indexOf(b.codigo);
     if (ia !== -1 || ib !== -1) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);

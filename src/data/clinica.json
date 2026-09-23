@@ -1,0 +1,114 @@
+[
+  {
+    "codigo": "EXT-NE",
+    "nombre": "Vista exterior noreste",
+    "src": "/proyectos/clinica/ext-ne.webp",
+    "thumb": "/proyectos/clinica/ext-ne-thumb.webp",
+    "ratio": 1.371
+  },
+  {
+    "codigo": "EXT-NW",
+    "nombre": "Vista exterior noroeste",
+    "src": "/proyectos/clinica/ext-nw.webp",
+    "thumb": "/proyectos/clinica/ext-nw-thumb.webp",
+    "ratio": 1.465
+  },
+  {
+    "codigo": "EXT-SW",
+    "nombre": "Vista exterior suroeste",
+    "src": "/proyectos/clinica/ext-sw.webp",
+    "thumb": "/proyectos/clinica/ext-sw-thumb.webp",
+    "ratio": 1.338
+  },
+  {
+    "codigo": "EXT-SE",
+    "nombre": "Vista exterior sureste",
+    "src": "/proyectos/clinica/ext-se.webp",
+    "thumb": "/proyectos/clinica/ext-se-thumb.webp",
+    "ratio": 1.587
+  },
+  {
+    "codigo": "INT-N4",
+    "nombre": "Nivel 4",
+    "src": "/proyectos/clinica/int-n4.webp",
+    "thumb": "/proyectos/clinica/int-n4-thumb.webp",
+    "ratio": 1.046
+  },
+  {
+    "codigo": "INT-N3",
+    "nombre": "Nivel 3",
+    "src": "/proyectos/clinica/int-n3.webp",
+    "thumb": "/proyectos/clinica/int-n3-thumb.webp",
+    "ratio": 1.084
+  },
+  {
+    "codigo": "INT-N2",
+    "nombre": "Nivel 2",
+    "src": "/proyectos/clinica/int-n2.webp",
+    "thumb": "/proyectos/clinica/int-n2-thumb.webp",
+    "ratio": 1.168
+  },
+  {
+    "codigo": "INT-N1",
+    "nombre": "Nivel 1",
+    "src": "/proyectos/clinica/int-n1.webp",
+    "thumb": "/proyectos/clinica/int-n1-thumb.webp",
+    "ratio": 1.213
+  },
+  {
+    "codigo": "INT-N-1",
+    "nombre": "Nivel -1",
+    "src": "/proyectos/clinica/int-n-1.webp",
+    "thumb": "/proyectos/clinica/int-n-1-thumb.webp",
+    "ratio": 1.179
+  },
+  {
+    "codigo": "INT-N-2",
+    "nombre": "Nivel -2",
+    "src": "/proyectos/clinica/int-n-2.webp",
+    "thumb": "/proyectos/clinica/int-n-2-thumb.webp",
+    "ratio": 1.317
+  },
+  {
+    "codigo": "INT-N-3",
+    "nombre": "Nivel -3",
+    "src": "/proyectos/clinica/int-n-3.webp",
+    "thumb": "/proyectos/clinica/int-n-3-thumb.webp",
+    "ratio": 1.331
+  },
+  {
+    "codigo": "INT-N-4",
+    "nombre": "Nivel -4",
+    "src": "/proyectos/clinica/int-n-4.webp",
+    "thumb": "/proyectos/clinica/int-n-4-thumb.webp",
+    "ratio": 1.342
+  },
+  {
+    "codigo": "INT-N-5",
+    "nombre": "Nivel -5",
+    "src": "/proyectos/clinica/int-n-5.webp",
+    "thumb": "/proyectos/clinica/int-n-5-thumb.webp",
+    "ratio": 1.351
+  },
+  {
+    "codigo": "INT-N-6",
+    "nombre": "Nivel -6",
+    "src": "/proyectos/clinica/int-n-6.webp",
+    "thumb": "/proyectos/clinica/int-n-6-thumb.webp",
+    "ratio": 1.362
+  },
+  {
+    "codigo": "INT-N-7",
+    "nombre": "Nivel -7",
+    "src": "/proyectos/clinica/int-n-7.webp",
+    "thumb": "/proyectos/clinica/int-n-7-thumb.webp",
+    "ratio": 1.376
+  },
+  {
+    "codigo": "INT-N-8",
+    "nombre": "Nivel -8",
+    "src": "/proyectos/clinica/int-n-8.webp",
+    "thumb": "/proyectos/clinica/int-n-8-thumb.webp",
+    "ratio": 1.388
+  }
+]
