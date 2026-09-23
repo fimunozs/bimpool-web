@@ -1,31 +1,25 @@
 ---
-import { proyectosPrevios, foto } from "../data/experiencia.js";
-
-// la foto se muestra solo si el archivo existe en public/experiencia/
-const fotos = import.meta.glob("/public/experiencia/*.webp", { eager: true });
-const hayFoto = Object.keys(fotos).some((k) => k.endsWith(foto.src));
+import { proyectosPrevios } from "../data/experiencia.js";
 ---
 
-<div class:list={["exp", hayFoto && "exp--con-foto"]}>
-  <div class="exp__texto">
-    <h4>De dónde viene el equipo</h4>
-    <p>
-      Antes de bimpool, los mismos modeladores participaron en estos proyectos dentro del
-      equipo de otras oficinas. <strong>No son encargos de bimpool</strong>: son la
-      experiencia de quienes hoy modelan aquí.
-    </p>
+<div class="exp">
+  <h4>De dónde viene el equipo</h4>
+  <p>
+    Antes de bimpool, los mismos modeladores participaron en estos proyectos dentro del
+    equipo de otras oficinas. <strong>No son encargos de bimpool</strong>: son la
+    experiencia de quienes hoy modelan aquí.
+  </p>
 
-    <ul class="exp__lista">
-      {proyectosPrevios.map((p) => <li>{p}</li>)}
-    </ul>
-  </div>
-
-  {hayFoto && (
-    <figure class="exp__foto">
-      <img src={foto.src} alt={foto.pie} loading="lazy" decoding="async" />
-      <figcaption>{foto.pie}</figcaption>
-    </figure>
-  )}
+  <ul class="exp__lista">
+    {proyectosPrevios.map((p) => (
+      <li>
+        <span class="exp__thumb">
+          {p.foto && <img src={p.foto} alt="" width="40" height="30" loading="lazy" decoding="async" />}
+        </span>
+        <span class="exp__nombre">{p.nombre}</span>
+      </li>
+    ))}
+  </ul>
 </div>
 
 <style>
@@ -34,67 +28,49 @@ const hayFoto = Object.keys(fotos).some((k) => k.endsWith(foto.src));
     padding-top: 3rem;
     border-top: 1px solid var(--line);
   }
-  .exp--con-foto {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
-  .exp__texto h4 {
+  .exp h4 {
     margin: 0 0 0.6rem;
     font-size: 1.05rem;
     color: var(--primary);
   }
-  .exp__texto > p {
+  .exp > p {
     color: var(--muted);
     font-size: 0.95rem;
     max-width: 62ch;
   }
-  .exp__texto strong { color: var(--primary); font-weight: 600; }
+  .exp strong { color: var(--primary); font-weight: 600; }
 
   .exp__lista {
     list-style: none;
     padding: 0;
     margin: 1.75rem 0 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 0.6rem 1.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.7rem 1.75rem;
   }
   .exp__lista li {
-    position: relative;
-    padding-left: 0.95rem;
-    font-size: 0.9rem;
-    color: var(--muted);
+    display: grid;
+    grid-template-columns: 40px 1fr;   /* la columna se reserva siempre: los nombres quedan alineados */
+    align-items: center;
+    gap: 0.75rem;
   }
-  .exp__lista li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.58em;
-    width: 5px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .exp__foto { margin: 0; }
-  .exp__foto img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 8px;
+  .exp__thumb {
     display: block;
+    width: 40px;
+    height: 30px;
   }
-  .exp__foto figcaption {
-    margin-top: 0.55rem;
-    font-size: 0.75rem;
+  .exp__thumb img {
+    width: 40px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+    filter: saturate(0.75);
+    opacity: 0.85;
+  }
+  .exp__nombre {
+    font-size: 0.88rem;
     color: var(--muted);
-    line-height: 1.4;
-  }
-
-  @media (max-width: 860px) {
-    .exp--con-foto { grid-template-columns: 1fr; gap: 1.75rem; }
-    .exp__foto { max-width: 320px; }
+    line-height: 1.35;
   }
 </style>
