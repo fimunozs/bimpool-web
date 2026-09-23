@@ -1,86 +1,351 @@
 ---
-const projects = [
-  {
-    tag: "Salud",
-    title: "Clínica y centro médico dental",
-    meta: "Arquitectura · Estructura · Documentación · 4 edificios",
-    text: "Modelos vinculados por especialidad, láminas de recinto tipo y layouts eléctricos generados con automatización sobre el modelo.",
-    tone: "a",
-  },
-  {
-    tag: "Residencial",
-    title: "Edificio habitacional 18 pisos",
-    meta: "Coordinación MEP · Clash detection",
-    text: "Coordinación de instalaciones con reportes semanales; interferencias críticas resueltas antes de la ejecución de losas.",
-    tone: "b",
-  },
-  {
-    tag: "Industrial",
-    title: "Planta logística y oficinas",
-    meta: "Modelado STR · Cubicación",
-    text: "Modelo estructural en LOD 400 con tablas de cantidades para licitación y control de avance de obra.",
-    tone: "c",
-  },
+import vistas from "../data/scfa.json";
+
+const ficha = [
+  { k: "Tipo", v: "Infraestructura aeroportuaria" },
+  { k: "Ubicación", v: "Antofagasta, Chile" },
+  { k: "Especialidad", v: "Corrientes débiles" },
+  { k: "Alcance", v: "Modelado y coordinación · 16 edificios" },
+  { k: "Estado", v: "En desarrollo" },
 ];
+
+const portada = vistas.find((v) => v.codigo === "PAX") ?? vistas[0];
 ---
 
 <section id="proyectos" class="section">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Proyectos</span>
-      <h2>Experiencia en distintos tipos de edificación</h2>
-      <p>Una muestra de lo que hemos modelado y coordinado. Podemos compartir más casos bajo acuerdo de confidencialidad.</p>
+      <h2>Lo que entregamos, visto en el modelo</h2>
+      <p>
+        Una muestra del trabajo en curso. Podemos compartir más casos y el detalle de cada
+        entrega bajo acuerdo de confidencialidad.
+      </p>
     </div>
-    <div class="grid grid--3">
-      {projects.map((p) => (
-        <article class="project">
-          <div class={`project__cover project__cover--${p.tone}`}>
-            <span class="project__tag">{p.tag}</span>
-          </div>
-          <div class="project__body">
-            <h3>{p.title}</h3>
-            <span class="project__meta">{p.meta}</span>
-            <p>{p.text}</p>
-          </div>
-        </article>
+
+    <article class="caso">
+      <figure class="caso__portada">
+        <button
+          class="visor-abrir"
+          type="button"
+          data-i={vistas.indexOf(portada)}
+          aria-label={`Ampliar ${portada.nombre}`}
+        >
+          <img
+            src={portada.src}
+            alt={`Axonometría de corrientes débiles · ${portada.nombre}`}
+            width="1800"
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+        <figcaption>{portada.codigo} · {portada.nombre}</figcaption>
+      </figure>
+
+      <div class="caso__info">
+        <span class="caso__tag">Aeropuerto</span>
+        <h3>Aeropuerto Andrés Sabella</h3>
+        <p class="caso__resumen">
+          Modelamos y coordinamos el sistema de corrientes débiles de los dieciséis edificios
+          del recinto: desde el terminal de pasajeros y la torre de control hasta las
+          subestaciones, el complejo de carga y los puestos de control.
+        </p>
+        <p class="caso__resumen">
+          Cada edificio se documenta con una axonometría donde el sistema se lee sobre la
+          arquitectura y la estructura. Así el trazado de bandejas, los gabinetes y los puntos
+          se revisan —y se corrigen— sobre el modelo, antes de que lleguen a terreno.
+        </p>
+        <dl class="caso__ficha">
+          {ficha.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </article>
+
+    <div class="galeria-head">
+      <h4>Los 16 edificios del recinto</h4>
+      <span>Toca una vista para ampliarla</span>
+    </div>
+
+    <ul class="galeria">
+      {vistas.map((v, i) => (
+        <li>
+          <button class="visor-abrir" type="button" data-i={i} aria-label={`Ampliar ${v.nombre}`}>
+            <img src={v.thumb} alt={`Axonometría · ${v.nombre}`} loading="lazy" decoding="async" />
+            <span class="galeria__pie">
+              <strong>{v.codigo}</strong>
+              {v.nombre}
+            </span>
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
+  </div>
+
+  <div class="visor" hidden>
+    <button class="visor__cerrar" type="button" aria-label="Cerrar">&times;</button>
+    <button class="visor__nav visor__nav--prev" type="button" aria-label="Anterior">&#8249;</button>
+    <figure class="visor__marco">
+      <img src="" alt="" />
+      <figcaption></figcaption>
+    </figure>
+    <button class="visor__nav visor__nav--next" type="button" aria-label="Siguiente">&#8250;</button>
   </div>
 </section>
 
+<script define:vars={{ vistas }}>
+  const visor = document.querySelector(".visor");
+  const img = visor.querySelector("img");
+  const pie = visor.querySelector("figcaption");
+  let actual = 0;
+
+  const mostrar = (i) => {
+    actual = (i + vistas.length) % vistas.length;
+    const v = vistas[actual];
+    img.src = v.src;
+    img.alt = `Axonometría de corrientes débiles · ${v.nombre}`;
+    pie.textContent = `${v.codigo} · ${v.nombre}`;
+  };
+
+  const abrir = (i) => {
+    mostrar(i);
+    visor.hidden = false;
+    document.body.style.overflow = "hidden";
+    visor.querySelector(".visor__cerrar").focus();
+  };
+
+  const cerrar = () => {
+    visor.hidden = true;
+    document.body.style.overflow = "";
+  };
+
+  document.querySelectorAll(".visor-abrir").forEach((b) =>
+    b.addEventListener("click", () => abrir(Number(b.dataset.i)))
+  );
+  visor.querySelector(".visor__cerrar").addEventListener("click", cerrar);
+  visor.querySelector(".visor__nav--prev").addEventListener("click", () => mostrar(actual - 1));
+  visor.querySelector(".visor__nav--next").addEventListener("click", () => mostrar(actual + 1));
+  visor.addEventListener("click", (e) => {
+    if (e.target === visor) cerrar();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (visor.hidden) return;
+    if (e.key === "Escape") cerrar();
+    if (e.key === "ArrowLeft") mostrar(actual - 1);
+    if (e.key === "ArrowRight") mostrar(actual + 1);
+  });
+</script>
+
 <style>
-  .project {
+  /* ---------- caso destacado ---------- */
+  .caso {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    overflow: hidden;
+    padding: 1.75rem;
     background: #fff;
   }
-  .project__cover {
-    aspect-ratio: 16 / 10;
-    position: relative;
-    background-size: 24px 24px;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px);
+  .caso__portada { margin: 0; }
+  .caso__portada img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background: #fff;
   }
-  .project__cover--a { background-color: #1a2942; }
-  .project__cover--b { background-color: #ff6b35; }
-  .project__cover--c { background-color: #a7b0bf; }
-  .project__tag {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-    background: rgba(255,255,255,0.92);
-    color: var(--primary);
-    font-size: 0.75rem;
+  .caso__portada figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .caso__tag {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     padding: 0.3rem 0.7rem;
     border-radius: 999px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    margin-bottom: 0.9rem;
   }
-  .project__body { padding: 1.5rem; }
-  .project__body h3 { font-size: 1.15rem; color: var(--primary); }
-  .project__meta { display: block; font-size: 0.82rem; color: var(--accent-dark); font-weight: 600; margin: 0.4rem 0 0.75rem; }
-  .project__body p { color: var(--muted); font-size: 0.95rem; }
+  .caso__info h3 {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    color: var(--primary);
+    letter-spacing: -0.015em;
+  }
+  .caso__resumen {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+  .caso__ficha {
+    margin: 1.75rem 0 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .caso__ficha > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .caso__ficha dt {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .caso__ficha dd {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  /* ---------- galería ---------- */
+  .galeria-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 3rem 0 1.25rem;
+  }
+  .galeria-head h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--primary);
+  }
+  .galeria-head span { font-size: 0.85rem; color: var(--muted); }
+
+  .galeria {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+  .galeria li { display: flex; }
+  .galeria__pie {
+    display: block;
+    padding: 0.7rem 0.85rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+  .galeria__pie strong {
+    display: block;
+    color: var(--accent-dark);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.15rem;
+  }
+
+  /* botón que envuelve cada imagen */
+  .visor-abrir {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    cursor: zoom-in;
+    text-align: left;
+    font: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .visor-abrir:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .visor-abrir:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .galeria .visor-abrir img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    padding: 0.5rem;
+    background: #fff;
+  }
+  .caso__portada .visor-abrir { border: 0; border-radius: 8px; }
+  .caso__portada .visor-abrir:hover { transform: none; }
+
+  /* ---------- visor a pantalla completa ---------- */
+  .visor {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(26, 41, 66, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+  .visor[hidden] { display: none !important; }
+  .visor__marco {
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+  }
+  .visor__marco img {
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
+  .visor__marco figcaption {
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .visor__cerrar,
+  .visor__nav {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    line-height: 1;
+    flex: none;
+  }
+  .visor__cerrar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+  }
+  .visor__nav { width: 48px; height: 48px; font-size: 2rem; }
+  .visor__cerrar:hover,
+  .visor__nav:hover { background: var(--accent); }
+
+  @media (max-width: 900px) {
+    .caso { grid-template-columns: 1fr; padding: 1.25rem; gap: 1.75rem; }
+    .caso__ficha > div { grid-template-columns: 7rem 1fr; }
+    .visor__nav { width: 40px; height: 40px; font-size: 1.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .visor-abrir { transition: none; }
+    .visor-abrir:hover { transform: none; }
+  }
 </style>

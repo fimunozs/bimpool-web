@@ -21,8 +21,27 @@ npm run preview  # sirve dist/
 ## Pendientes de contenido (buscar y reemplazar)
 
 - `Contact.astro` → `FORM_ENDPOINT`: poner el id de Formspree; hasta entonces el form usa `mailto:`.
-- `Projects.astro` — proyectos y fotos reales (las portadas son placeholders de color).
 - `astro.config.mjs` → `site` — dominio definitivo.
+
+## Proyectos del portafolio
+
+`src/components/Projects.astro` muestra un caso destacado más una galería con visor a
+pantalla completa (sin librerías: ~60 líneas de JS al final del componente).
+
+Las imágenes **no se editan a mano**. El original vive en Google Drive
+(`WEBPAGE-BIMPOOL / 04_MULTIMEDIA / 02_RENDERS Y VISTAS / <proyecto>`) y se procesa con:
+
+```bash
+cd tools/brandkit
+node proyecto-imagenes.js "<carpeta origen>" <slug>
+```
+
+El script recorta el blanco sobrante, exporta WebP en dos tamaños a
+`public/proyectos/<slug>/` y escribe `src/data/<slug>.json`, que es lo que importa el
+componente. Espera archivos con el patrón `<PROY>_<VISTA>_<CÓDIGO>_<Nombre>.png`.
+
+Hoy hay un proyecto: **SCFA · Aeropuerto Andrés Sabella** (16 edificios, corrientes
+débiles, en desarrollo). El mandante no se nombra en el sitio a propósito.
 
 ## Deploy
 

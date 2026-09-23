@@ -1,0 +1,114 @@
+[
+  {
+    "codigo": "PAX",
+    "nombre": "Terminal de Pasajeros",
+    "src": "/proyectos/scfa/pax.webp",
+    "thumb": "/proyectos/scfa/pax-thumb.webp",
+    "ratio": 1.627
+  },
+  {
+    "codigo": "TWR",
+    "nombre": "Torre de Control",
+    "src": "/proyectos/scfa/twr.webp",
+    "thumb": "/proyectos/scfa/twr-thumb.webp",
+    "ratio": 0.689
+  },
+  {
+    "codigo": "LOG",
+    "nombre": "Edificio Logístico",
+    "src": "/proyectos/scfa/log.webp",
+    "thumb": "/proyectos/scfa/log-thumb.webp",
+    "ratio": 1.434
+  },
+  {
+    "codigo": "CCA",
+    "nombre": "Complejo de Carga",
+    "src": "/proyectos/scfa/cca.webp",
+    "thumb": "/proyectos/scfa/cca-thumb.webp",
+    "ratio": 1.639
+  },
+  {
+    "codigo": "ADM",
+    "nombre": "Administrativo",
+    "src": "/proyectos/scfa/adm.webp",
+    "thumb": "/proyectos/scfa/adm-thumb.webp",
+    "ratio": 1.538
+  },
+  {
+    "codigo": "SEI",
+    "nombre": "Cuartel Seguridad, Salvamento y Extinción de Incendios",
+    "src": "/proyectos/scfa/sei.webp",
+    "thumb": "/proyectos/scfa/sei-thumb.webp",
+    "ratio": 1.584
+  },
+  {
+    "codigo": "CAN",
+    "nombre": "Caniles",
+    "src": "/proyectos/scfa/can.webp",
+    "thumb": "/proyectos/scfa/can-thumb.webp",
+    "ratio": 1.554
+  },
+  {
+    "codigo": "CTE",
+    "nombre": "Central Térmica",
+    "src": "/proyectos/scfa/cte.webp",
+    "thumb": "/proyectos/scfa/cte-thumb.webp",
+    "ratio": 1.378
+  },
+  {
+    "codigo": "GSO",
+    "nombre": "Pabellón Inflado Globo Sonda",
+    "src": "/proyectos/scfa/gso.webp",
+    "thumb": "/proyectos/scfa/gso-thumb.webp",
+    "ratio": 1.369
+  },
+  {
+    "codigo": "PC1",
+    "nombre": "Puesto de Control de Acceso DGAC",
+    "src": "/proyectos/scfa/pc1.webp",
+    "thumb": "/proyectos/scfa/pc1-thumb.webp",
+    "ratio": 1.409
+  },
+  {
+    "codigo": "PC2",
+    "nombre": "Puesto de Control de Acceso Sur",
+    "src": "/proyectos/scfa/pc2.webp",
+    "thumb": "/proyectos/scfa/pc2-thumb.webp",
+    "ratio": 1.367
+  },
+  {
+    "codigo": "ERX",
+    "nombre": "Receptor Externo",
+    "src": "/proyectos/scfa/erx.webp",
+    "thumb": "/proyectos/scfa/erx-thumb.webp",
+    "ratio": 1.573
+  },
+  {
+    "codigo": "SES",
+    "nombre": "Subestación Eléctrica Concesionario",
+    "src": "/proyectos/scfa/ses.webp",
+    "thumb": "/proyectos/scfa/ses-thumb.webp",
+    "ratio": 1.331
+  },
+  {
+    "codigo": "SED",
+    "nombre": "Subestación Eléctrica DGAC",
+    "src": "/proyectos/scfa/sed.webp",
+    "thumb": "/proyectos/scfa/sed-thumb.webp",
+    "ratio": 1.431
+  },
+  {
+    "codigo": "SCO",
+    "nombre": "Surtidor de Combustible",
+    "src": "/proyectos/scfa/sco.webp",
+    "thumb": "/proyectos/scfa/sco-thumb.webp",
+    "ratio": 1.315
+  },
+  {
+    "codigo": "ETX",
+    "nombre": "Transmisor Externo",
+    "src": "/proyectos/scfa/etx.webp",
+    "thumb": "/proyectos/scfa/etx-thumb.webp",
+    "ratio": 1.537
+  }
+]
