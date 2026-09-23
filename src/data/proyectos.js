@@ -11,17 +11,17 @@ export const proyectos = [
     cliente: { nombre: "GITC", logo: "/clientes/gitc.png" },
     portada: "EXT-NE",
     parrafos: [
-      "Modelamos la arquitectura completa del edificio: catorce niveles, desde los ocho subterráneos hasta la cubierta, con recintos clínicos, mobiliario y equipamiento médico modelados pieza por pieza.",
+      "Modelamos la arquitectura y la estructura del edificio: catorce niveles, desde los ocho subterráneos hasta la cubierta, con recintos clínicos, mobiliario y equipamiento médico modelados pieza por pieza.",
       "Las vistas se generan desde el propio modelo con plantillas de vista, no como renders aparte. Cada planta se corta a la altura del nivel para revisar la distribución en tres dimensiones, y las cuatro esquinas exteriores muestran el volumen tal como se percibe desde la calle.",
     ],
     alcance: [
-      { k: "Modelación", v: "Arquitectura completa del edificio, 14 niveles, con recintos clínicos, mobiliario y equipamiento médico." },
-      { k: "Coordinación", v: "Modelo vinculado con estructura y topografía, revisado por nivel sobre el propio modelo." },
+      { k: "Modelación", v: "Arquitectura y estructura del edificio, 14 niveles, con recintos clínicos, mobiliario y equipamiento médico." },
+      { k: "Coordinación", v: "Arquitectura y estructura en modelos vinculados, revisados por nivel sobre el propio modelo." },
       { k: "Documentación", v: "Plantas, cortes, láminas de recinto y tablas de cantidades generadas desde el modelo." },
     ],
     ficha: [
       { k: "Tipo", v: "Edificio clínico y dental" },
-      { k: "Especialidad", v: "Arquitectura" },
+      { k: "Especialidades", v: "Arquitectura y estructura" },
       { k: "Niveles", v: "14, de subterráneo −8 a cubierta" },
       { k: "Estado", v: "En desarrollo" },
     ],
