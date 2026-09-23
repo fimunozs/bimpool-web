@@ -56,6 +56,15 @@ const visor = proyectos.map((p) => p.vistas);
 
               {p.parrafos.map((t) => <p class="caso__resumen">{t}</p>)}
 
+              <ul class="alcance">
+                {p.alcance.map((a) => (
+                  <li>
+                    <strong>{a.k}</strong>
+                    <span>{a.v}</span>
+                  </li>
+                ))}
+              </ul>
+
               <dl class="caso__ficha">
                 {p.ficha.map((f) => (
                   <div>
@@ -226,6 +235,45 @@ const visor = proyectos.map((p) => p.vistas);
   }
 
   .caso__resumen { margin-top: 1rem; color: var(--muted); font-size: 0.97rem; }
+
+  /* ---------- alcance: modelación · coordinación · documentación ---------- */
+  .alcance {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .alcance li {
+    display: grid;
+    grid-template-columns: 0.4rem 1fr;
+    gap: 0 0.9rem;
+    align-items: start;
+  }
+  .alcance li::before {
+    content: "";
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 0.5rem;
+  }
+  .alcance strong {
+    grid-column: 2;
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .alcance span {
+    grid-column: 2;
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
   .caso__ficha {
     margin: 1.75rem 0 0;
     display: grid;

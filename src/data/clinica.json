@@ -11,7 +11,7 @@
     "nombre": "Vista exterior noroeste",
     "src": "/proyectos/clinica/ext-nw.webp",
     "thumb": "/proyectos/clinica/ext-nw-thumb.webp",
-    "ratio": 1.465
+    "ratio": 1.463
   },
   {
     "codigo": "EXT-SW",
@@ -25,7 +25,7 @@
     "nombre": "Vista exterior sureste",
     "src": "/proyectos/clinica/ext-se.webp",
     "thumb": "/proyectos/clinica/ext-se-thumb.webp",
-    "ratio": 1.587
+    "ratio": 1.588
   },
   {
     "codigo": "INT-N4",
@@ -46,7 +46,7 @@
     "nombre": "Nivel 2",
     "src": "/proyectos/clinica/int-n2.webp",
     "thumb": "/proyectos/clinica/int-n2-thumb.webp",
-    "ratio": 1.168
+    "ratio": 1.169
   },
   {
     "codigo": "INT-N1",
