@@ -41,6 +41,21 @@ Recorta el blanco, exporta WebP en dos tamaños a `public/proyectos/<slug>/` y e
 `src/data/<slug>.json`. El tercer argumento fija el orden de la galería. Espera archivos
 `<PROY>_<VISTA>_<CÓDIGO>_<Nombre>.png`.
 
+### Láminas de la galería
+
+La galería no muestra una miniatura por vista: las vistas se agrupan en **láminas** de
+2 × 2 (cuatro vistas por imagen, con su código rotulado). Se componen con:
+
+```bash
+cd tools/brandkit
+node laminas.js laminas-<slug>.json
+```
+
+El JSON define origen, portada y qué vistas van en cada lámina; el script recorta el blanco
+de cada PNG, las compone sobre fondo blanco, rotula el código y escribe `src/data/<slug>.json`
+más `portada.webp`. `proyecto-imagenes.js` sigue sirviendo para exportar vistas sueltas, pero
+el sitio consume las láminas.
+
 ### Logotipos de cliente
 
 Cada proyecto muestra un cuadro pequeño con el logo del cliente. Se preparan con:

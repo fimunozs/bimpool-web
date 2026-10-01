@@ -1,0 +1,15 @@
+{
+  "slug": "scfa",
+  "origen": "G:/Mi unidad/FIMS-WORK/01.ENCARGOS/01.PROYECTOS/WEBPAGE-BIMPOOL/04_MULTIMEDIA/02_RENDERS Y VISTAS/SCFA - Aeropuerto Andres Sabella",
+  "portada": "PAX",
+  "laminas": [
+    { "codigo": "L-01", "nombre": "Terminal y operación", "detalle": "Terminal de pasajeros, torre de control, administrativo y cuartel de seguridad",
+      "vistas": ["PAX", "TWR", "ADM", "SEI"] },
+    { "codigo": "L-02", "nombre": "Carga y logística", "detalle": "Complejo de carga, edificio logístico, surtidor de combustible y caniles",
+      "vistas": ["CCA", "LOG", "SCO", "CAN"] },
+    { "codigo": "L-03", "nombre": "Energía y clima", "detalle": "Subestaciones DGAC y concesionario, central térmica y pabellón de globo sonda",
+      "vistas": ["SED", "SES", "CTE", "GSO"] },
+    { "codigo": "L-04", "nombre": "Control y comunicaciones", "detalle": "Puestos de control de acceso y estaciones receptora y transmisora",
+      "vistas": ["PC1", "PC2", "ERX", "ETX"] }
+  ]
+}

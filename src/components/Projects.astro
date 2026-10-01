@@ -18,7 +18,6 @@ const visor = proyectos.map((p) => p.vistas);
     </div>
 
     {proyectos.map((p, pi) => {
-      const portada = p.vistas.find((v) => v.codigo === p.portada) ?? p.vistas[0];
       return (
         <div class="proyecto">
           <article class="caso">
@@ -27,17 +26,17 @@ const visor = proyectos.map((p) => p.vistas);
                 class="visor-abrir"
                 type="button"
                 data-p={pi}
-                data-i={p.vistas.indexOf(portada)}
-                aria-label={`Ampliar ${portada.nombre}`}
+                data-i="0"
+                aria-label={`Ver las láminas de ${p.titulo}`}
               >
                 <img
-                  src={portada.src}
-                  alt={`${p.titulo} · ${portada.nombre}`}
+                  src={p.portada}
+                  alt={`${p.titulo} · ${p.portadaPie}`}
                   loading="lazy"
                   decoding="async"
                 />
               </button>
-              <figcaption>{portada.codigo} · {portada.nombre}</figcaption>
+              <figcaption>{p.portadaPie}</figcaption>
             </figure>
 
             <div class="caso__info">
@@ -96,6 +95,7 @@ const visor = proyectos.map((p) => p.vistas);
                   <span class="galeria__pie">
                     <strong>{v.codigo}</strong>
                     {v.nombre}
+                    {v.detalle && <em>{v.detalle}</em>}
                   </span>
                 </button>
               </li>
@@ -315,8 +315,8 @@ const visor = proyectos.map((p) => p.vistas);
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
   }
   .galeria li { display: flex; }
   .galeria__pie {
@@ -333,6 +333,15 @@ const visor = proyectos.map((p) => p.vistas);
     letter-spacing: 0.08em;
     margin-bottom: 0.15rem;
   }
+  .galeria__pie em {
+    display: block;
+    margin-top: 0.3rem;
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--secondary);
+    line-height: 1.4;
+  }
+  .galeria .visor-abrir img { aspect-ratio: 2400 / 1700; }
 
   .visor-abrir {
     display: block;

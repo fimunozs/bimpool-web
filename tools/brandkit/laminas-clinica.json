@@ -1,0 +1,15 @@
+{
+  "slug": "clinica",
+  "origen": "G:/Mi unidad/FIMS-WORK/01.ENCARGOS/01.PROYECTOS/WEBPAGE-BIMPOOL/04_MULTIMEDIA/02_RENDERS Y VISTAS/INO4 - Clinica Dental Tobalaba",
+  "portada": "EXT-NE",
+  "laminas": [
+    { "codigo": "L-01", "nombre": "Vistas exteriores", "detalle": "Las cuatro esquinas del volumen",
+      "vistas": ["EXT-NE", "EXT-NW", "EXT-SW", "EXT-SE"] },
+    { "codigo": "L-02", "nombre": "Niveles 1 a 4", "detalle": "Plantas sobre cota de terreno",
+      "vistas": ["INT-N4", "INT-N3", "INT-N2", "INT-N1"] },
+    { "codigo": "L-03", "nombre": "Subterráneos −1 a −4", "detalle": "Primeros cuatro niveles bajo cota",
+      "vistas": ["INT-N-1", "INT-N-2", "INT-N-3", "INT-N-4"] },
+    { "codigo": "L-04", "nombre": "Subterráneos −5 a −8", "detalle": "Niveles inferiores de estacionamiento",
+      "vistas": ["INT-N-5", "INT-N-6", "INT-N-7", "INT-N-8"] }
+  ]
+}

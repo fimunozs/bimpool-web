@@ -1,15 +1,16 @@
 import scfa from "./scfa.json";
 import clinica from "./clinica.json";
 
-// Un objeto por proyecto del portafolio. `vistas` viene del manifiesto que genera
-// tools/brandkit/proyecto-imagenes.js; `portada` es el código de la vista destacada.
+// Un objeto por proyecto del portafolio. `vistas` son las láminas que genera
+// tools/brandkit/laminas.js; `portada` es la ruta de la vista destacada.
 export const proyectos = [
   {
     slug: "clinica",
     tag: "Salud",
     titulo: "Clínica y Centro Médico Dental",
     cliente: { nombre: "GITC", logo: "/clientes/gitc.png" },
-    portada: "EXT-NE",
+    portada: "/proyectos/clinica/portada.webp",
+    portadaPie: "Vista exterior noreste",
     parrafos: [
       "Modelamos la arquitectura y la estructura del edificio: catorce niveles, desde los ocho subterráneos hasta la cubierta, con recintos clínicos, mobiliario y equipamiento médico modelados pieza por pieza.",
     ],
@@ -24,7 +25,7 @@ export const proyectos = [
       { k: "Niveles", v: "14, de subterráneo −8 a cubierta" },
       { k: "Estado", v: "En desarrollo" },
     ],
-    galeria: "Cuatro vistas exteriores y una por planta",
+    galeria: "Cuatro láminas: exteriores y una planta por nivel",
     vistas: clinica,
   },
   {
@@ -32,7 +33,8 @@ export const proyectos = [
     tag: "Aeropuerto",
     titulo: "Aeropuerto Andrés Sabella",
     cliente: { nombre: "IDOM", logo: "/clientes/idom.png" },
-    portada: "PAX",
+    portada: "/proyectos/scfa/portada.webp",
+    portadaPie: "Terminal de pasajeros",
     parrafos: [
       "Modelamos y coordinamos el sistema de corrientes débiles de los dieciséis edificios del recinto: desde el terminal de pasajeros y la torre de control hasta las subestaciones, el complejo de carga y los puestos de control.",
     ],
@@ -48,7 +50,7 @@ export const proyectos = [
       { k: "Edificios", v: "16 del recinto aeroportuario" },
       { k: "Estado", v: "En desarrollo" },
     ],
-    galeria: "Los 16 edificios del recinto",
+    galeria: "Cuatro láminas con los 16 edificios del recinto",
     vistas: scfa,
   },
 ];
