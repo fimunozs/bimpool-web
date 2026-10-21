@@ -83,7 +83,10 @@ Ningún mandante final se nombra en el sitio: el cuadro muestra la oficina que c
 
 ## Deploy
 
-Vercel detecta Astro automáticamente (`npm run build`, output `dist/`). No necesita adapter.
+El sitio se publica en **Cloudflare Pages** (plan Free, que sí permite uso comercial), build `npm run build`, salida `dist/`. No necesita adapter.
+
+El proyecto de Vercel y su `vercel.json` siguen en el repo hasta confirmar que Cloudflare quedó estable; después se borran.
+
 ## Visibilidad en buscadores
 
 El sitio está **bloqueado para los buscadores** mientras bimpool no quiera difundirlo
@@ -95,10 +98,10 @@ interruptor y una excepción:
 | `src/consts.js` → `INDEXABLE` | El interruptor. `false` = no indexar. |
 | `src/layouts/Base.astro` | Con `INDEXABLE` en `false` emite `<meta name="robots" content="noindex, nofollow">`. |
 | `src/pages/robots.txt.js` | Genera el `robots.txt`: `Disallow: /` cuando está bloqueado. |
-| `vercel.json` | Cabecera `X-Robots-Tag: noindex, nofollow` en **todas** las respuestas — cubre imágenes y archivos, que no tienen `<head>`. **Es JSON y no lee `INDEXABLE`: hay que editarlo a mano.** |
+| `public/_headers` | Cabecera `X-Robots-Tag: noindex, nofollow` en **todas** las respuestas de Cloudflare Pages — cubre imágenes y archivos, que no tienen `<head>`. **Es un archivo estático y no lee `INDEXABLE`: hay que editarlo a mano.** |
 
 Para abrir el sitio a buscadores: poner `INDEXABLE = true` y, en el mismo commit, quitar
-el bloque `headers` de `vercel.json`. Si solo se cambia la constante, la cabecera sigue
+el bloque de `public/_headers`. Si solo se cambia la constante, la cabecera sigue
 mandando y el sitio no se indexa igual.
 
 Ojo con el orden: `Disallow: /` impide que Google *lea* la página, y por lo tanto también
