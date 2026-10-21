@@ -1,9 +1,22 @@
 ---
 import { proyectos } from "../data/proyectos.js";
+import { proyectosPrevios } from "../data/experiencia.js";
+import { categorias } from "../data/categorias.js";
 import Experiencia from "./Experiencia.astro";
 
 // lista plana para el visor: cada botón guarda el índice de proyecto y el de vista
 const visor = proyectos.map((p) => p.vistas);
+
+// Un grupo por rubro, con los encargos de bimpool y, aparte, la experiencia previa
+// del equipo en el mismo rubro. `i` conserva el índice global del proyecto, que es
+// lo que el visor usa para encontrar sus láminas. Un rubro sin nada no se dibuja.
+const grupos = categorias
+  .map((c) => ({
+    ...c,
+    casos: proyectos.map((p, i) => ({ ...p, i })).filter((p) => p.categoria === c.id),
+    previos: proyectosPrevios.filter((p) => p.categoria === c.id),
+  }))
+  .filter((g) => g.casos.length > 0 || g.previos.length > 0);
 ---
 
 <section id="proyectos" class="section">
@@ -15,97 +28,104 @@ const visor = proyectos.map((p) => p.vistas);
         Trabajo en curso, exportado desde los propios modelos. Podemos compartir más casos y
         el detalle de cada entrega bajo acuerdo de confidencialidad.
       </p>
+      <p>
+        Dentro de cada rubro separamos los encargos de bimpool de la
+        <strong>experiencia previa del equipo</strong>: proyectos en los que los mismos
+        modeladores participaron dentro del equipo de otras oficinas y que
+        <strong>no son encargos de bimpool</strong>.
+      </p>
     </div>
 
-    {proyectos.map((p, pi) => {
-      return (
-        <div class="proyecto">
-          <article class="caso">
-            <figure class="caso__portada">
-              <button
-                class="visor-abrir"
-                type="button"
-                data-p={pi}
-                data-i="0"
-                aria-label={`Ver las láminas de ${p.titulo}`}
-              >
-                <img
-                  src={p.portada}
-                  alt={`${p.titulo} · ${p.portadaPie}`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </button>
-              <figcaption>{p.portadaPie}</figcaption>
-            </figure>
+    {grupos.map((g, gi) => (
+      <section class="rubro">
+        <header class="rubro__head">
+          <span class="rubro__n">{String(gi + 1).padStart(2, "0")}</span>
+          <h3>{g.titulo}</h3>
+        </header>
 
-            <div class="caso__info">
-              <span class="caso__tag">{p.tag}</span>
-              <h3>{p.titulo}</h3>
-
-              <div class="cliente">
-                <span class="cliente__label">Cliente</span>
-                <img
-                  class="cliente__logo"
-                  src={p.cliente.logo}
-                  alt={p.cliente.nombre}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-
-              {p.parrafos.map((t) => <p class="caso__resumen">{t}</p>)}
-
-              <ul class="alcance">
-                {p.alcance.map((a) => (
-                  <li>
-                    <strong>{a.k}</strong>
-                    <span>{a.v}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <dl class="caso__ficha">
-                {p.ficha.map((f) => (
-                  <div>
-                    <dt>{f.k}</dt>
-                    <dd>{f.v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </article>
-
-          <div class="galeria-head">
-            <h4>{p.galeria}</h4>
-            <span>Toca una vista para ampliarla</span>
-          </div>
-
-          <ul class="galeria">
-            {p.vistas.map((v, i) => (
-              <li>
+        {g.casos.map((p) => (
+          <div class="proyecto">
+            <article class="caso">
+              <figure class="caso__portada">
                 <button
                   class="visor-abrir"
                   type="button"
-                  data-p={pi}
-                  data-i={i}
-                  aria-label={`Ampliar ${v.nombre}`}
+                  data-p={p.i}
+                  data-i="0"
+                  aria-label={`Ver las láminas de ${p.titulo}`}
                 >
-                  <img src={v.thumb} alt={v.nombre} loading="lazy" decoding="async" />
-                  <span class="galeria__pie">
-                    <strong>{v.codigo}</strong>
-                    {v.nombre}
-                    {v.detalle && <em>{v.detalle}</em>}
-                  </span>
+                  <img
+                    src={p.portada}
+                    alt={`${p.titulo} · ${p.portadaPie}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    })}
+                <figcaption>{p.portadaPie}</figcaption>
+              </figure>
 
-    <Experiencia />
+              <div class="caso__info">
+                <span class="caso__tag">{p.tag}</span>
+                <h4>{p.titulo}</h4>
+
+                <div class="cliente">
+                  <span class="cliente__label">Cliente</span>
+                  <img class="cliente__logo" src={p.cliente.logo} alt={p.cliente.nombre} decoding="async" />
+                </div>
+
+                {p.parrafos.map((t) => <p class="caso__resumen">{t}</p>)}
+
+                <ul class="alcance">
+                  {p.alcance.map((a) => (
+                    <li>
+                      <strong>{a.k}</strong>
+                      <span>{a.v}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <dl class="caso__ficha">
+                  {p.ficha.map((f) => (
+                    <div>
+                      <dt>{f.k}</dt>
+                      <dd>{f.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </article>
+
+            <div class="galeria-head">
+              <h5>{p.galeria}</h5>
+              <span>Toca una vista para ampliarla</span>
+            </div>
+
+            <ul class="galeria">
+              {p.vistas.map((v, i) => (
+                <li>
+                  <button
+                    class="visor-abrir"
+                    type="button"
+                    data-p={p.i}
+                    data-i={i}
+                    aria-label={`Ampliar ${v.nombre}`}
+                  >
+                    <img src={v.thumb} alt={v.nombre} loading="lazy" decoding="async" />
+                    <span class="galeria__pie">
+                      <strong>{v.codigo}</strong>
+                      {v.nombre}
+                      {v.detalle && <em>{v.detalle}</em>}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <Experiencia items={g.previos} solo={g.casos.length === 0} />
+      </section>
+    ))}
   </div>
 
   <div class="visor" hidden>
@@ -166,9 +186,33 @@ const visor = proyectos.map((p) => p.vistas);
 </script>
 
 <style>
+  /* ---------- rubro: el título que agrupa los proyectos ---------- */
+  .rubro { margin-top: 3.5rem; }
+  .rubro__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 2px solid var(--primary);
+  }
+  .rubro__n {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .rubro__head h3 {
+    margin: 0;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    color: var(--primary);
+    letter-spacing: -0.01em;
+  }
+
+  .proyecto { margin-top: 2.5rem; }
   .proyecto + .proyecto {
-    margin-top: 4.5rem;
-    padding-top: 4.5rem;
+    margin-top: 3.5rem;
+    padding-top: 3.5rem;
     border-top: 1px solid var(--line);
   }
 
@@ -204,7 +248,8 @@ const visor = proyectos.map((p) => p.vistas);
     border-radius: 999px;
     margin-bottom: 0.9rem;
   }
-  .caso__info h3 {
+  .caso__info h4 {
+    margin: 0;
     font-size: clamp(1.4rem, 2.4vw, 1.9rem);
     color: var(--primary);
     letter-spacing: -0.015em;
@@ -214,25 +259,25 @@ const visor = proyectos.map((p) => p.vistas);
   .cliente {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.6rem;
     margin-top: 1.1rem;
-    padding: 0.6rem 0.9rem;
+    padding: 0.4rem 0.7rem;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--neutral);
     width: fit-content;
   }
   .cliente__label {
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
-    padding-right: 0.85rem;
+    padding-right: 0.6rem;
     border-right: 1px solid var(--line);
   }
   .cliente__logo {
-    height: 20px;
+    height: 14px;
     width: auto;
     opacity: 0.75;
   }
@@ -305,9 +350,9 @@ const visor = proyectos.map((p) => p.vistas);
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    margin: 3rem 0 1.25rem;
+    margin: 2.5rem 0 1.25rem;
   }
-  .galeria-head h4 { margin: 0; font-size: 1.05rem; color: var(--primary); }
+  .galeria-head h5 { margin: 0; font-size: 1.05rem; color: var(--primary); }
   .galeria-head span { font-size: 0.85rem; color: var(--muted); }
 
   .galeria {
@@ -421,10 +466,11 @@ const visor = proyectos.map((p) => p.vistas);
   .visor__nav:hover { background: var(--accent); }
 
   @media (max-width: 900px) {
+    .rubro { margin-top: 2.5rem; }
     .caso { grid-template-columns: 1fr; padding: 1.25rem; gap: 1.75rem; }
     .caso__ficha > div { grid-template-columns: 7rem 1fr; }
     .visor__nav { width: 40px; height: 40px; font-size: 1.5rem; }
-    .proyecto + .proyecto { margin-top: 3rem; padding-top: 3rem; }
+    .proyecto + .proyecto { margin-top: 2.5rem; padding-top: 2.5rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .visor-abrir { transition: none; }

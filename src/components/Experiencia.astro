@@ -1,49 +1,53 @@
 ---
-import { proyectosPrevios } from "../data/experiencia.js";
+// Lista compacta de la experiencia previa del equipo DENTRO de un rubro.
+// Projects.astro le pasa ya filtrados los proyectos de la categoría; el aviso de
+// que no son encargos de bimpool va una sola vez, en la cabecera de la sección.
+// `solo` = el rubro no tiene ningún encargo de bimpool encima, así que la lista
+// cuelga directo del título y no necesita separador propio.
+const { items, solo = false } = Astro.props;
 ---
 
-<div class="exp">
-  <h4>De dónde viene el equipo</h4>
-  <p>
-    Antes de bimpool, los mismos modeladores participaron en estos proyectos dentro del
-    equipo de otras oficinas. <strong>No son encargos de bimpool</strong>: son la
-    experiencia de quienes hoy modelan aquí.
-  </p>
+{items.length > 0 && (
+  <div class={solo ? "exp exp--solo" : "exp"}>
+    <h5>Experiencia previa del equipo</h5>
 
-  <ul class="exp__lista">
-    {proyectosPrevios.map((p) => (
-      <li>
-        <span class="exp__thumb">
-          {p.foto && <img src={p.foto} alt="" width="40" height="30" loading="lazy" decoding="async" />}
-        </span>
-        <span class="exp__nombre">{p.nombre}</span>
-      </li>
-    ))}
-  </ul>
-</div>
+    <ul class="exp__lista">
+      {items.map((p) => (
+        <li>
+          <span class="exp__thumb">
+            {p.foto && <img src={p.foto} alt="" width="40" height="30" loading="lazy" decoding="async" />}
+          </span>
+          <span class="exp__nombre">{p.nombre}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
 <style>
   .exp {
-    margin-top: 4.5rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--line);
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--line);
   }
-  .exp h4 {
-    margin: 0 0 0.6rem;
-    font-size: 1.05rem;
-    color: var(--primary);
+  .exp--solo {
+    margin-top: 1.75rem;
+    padding-top: 0;
+    border-top: 0;
   }
-  .exp > p {
+  .exp h5 {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--muted);
-    font-size: 0.95rem;
-    max-width: 62ch;
   }
-  .exp strong { color: var(--primary); font-weight: 600; }
 
   .exp__lista {
     list-style: none;
     padding: 0;
-    margin: 1.75rem 0 0;
+    margin: 1.1rem 0 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 0.7rem 1.75rem;

@@ -1,11 +1,14 @@
 import scfa from "./scfa.json";
 import clinica from "./clinica.json";
 
-// Un objeto por proyecto del portafolio. `vistas` son las láminas que genera
-// tools/brandkit/laminas.js; `portada` es la ruta de la vista destacada.
+// Un objeto por proyecto del portafolio. `categoria` es el id de un rubro de
+// src/data/categorias.js y decide bajo qué título aparece el caso. `vistas` son
+// las láminas que genera tools/brandkit/laminas.js; `portada` es la ruta de la
+// vista destacada.
 export const proyectos = [
   {
     slug: "clinica",
+    categoria: "hospitalaria",
     tag: "Salud",
     titulo: "Clínica y Centro Médico Dental",
     cliente: { nombre: "GITC", logo: "/clientes/gitc.png" },
@@ -30,6 +33,7 @@ export const proyectos = [
   },
   {
     slug: "scfa",
+    categoria: "aeroportuaria",
     tag: "Aeropuerto",
     titulo: "Aeropuerto Andrés Sabella",
     cliente: { nombre: "IDOM", logo: "/clientes/idom.png" },
