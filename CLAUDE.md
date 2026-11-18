@@ -55,7 +55,9 @@ El JSON define origen, portada y qué vistas van en cada lámina; el script reco
 de cada PNG, las compone sobre fondo blanco, rotula el código y escribe `src/data/<slug>.json`
 más `portada.webp`. Al final pasa todo por `fondo-azul.js`: fondo `--primary`, arquitectura en
 blanco y el color de la especialidad intacto (`node fondo-azul.js <archivo.webp>` lo aplica a
-imágenes ya exportadas; omite las que ya no tienen fondo blanco). `proyecto-imagenes.js` sigue sirviendo para exportar vistas sueltas, pero
+imágenes ya exportadas; omite las que ya no tienen fondo blanco). Con `"sinSombras": true` en el
+JSON (o `--sin-sombras` en el CLI) las sombras grises del plano horizontal pasan a fondo; se usa en
+`clinica`, no en `scfa`, donde la arquitectura tenue es justamente gris claro. `proyecto-imagenes.js` sigue sirviendo para exportar vistas sueltas, pero
 el sitio consume las láminas.
 
 ### Logotipos de cliente

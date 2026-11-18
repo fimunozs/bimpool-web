@@ -2,7 +2,11 @@
 // fondo azul --primary (#1A2942), arquitectura (línea gris/negra) en blanco y
 // el color de la especialidad (p. ej. el verde de corrientes débiles) se conserva.
 //
-//   node fondo-azul.js <archivo.webp> [...]      reescribe los archivos en su lugar
+//   node fondo-azul.js [--sin-sombras] <archivo.webp> [...]   reescribe los archivos en su lugar
+//
+// --sin-sombras (o `{ sinSombras: true }`): los grises claros, como las sombras que Revit
+// proyecta sobre el plano horizontal, pasan a fondo azul en vez de verse como una mancha.
+// Usar solo en vistas de arquitectura; en las de especialidad la arquitectura tenue es gris claro.
 //
 // También se exporta `aAzul(buffer)` para que laminas.js lo aplique al componer.
 // El CLI omite las imágenes cuya esquina ya no es blanca, para no invertirlas dos veces.
@@ -16,7 +20,10 @@ const BLANCO = [255, 255, 255];
 // vistas de especialidad) sin saturar los sombreados de las vistas de arquitectura.
 const curva = (v) => Math.pow(Math.min(1, v * 2.2), 0.85);
 
-async function aAzul(input) {
+// Luminancia desde la que un gris se considera sombra (~217/255; las sombras de INO4 rondan 229)
+const UMBRAL_SOMBRA = 0.85;
+
+async function aAzul(input, { sinSombras = false } = {}) {
   const { data, info } = await sharp(input).flatten({ background: "#ffffff" })
     .removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const out = Buffer.alloc(data.length);
@@ -28,7 +35,8 @@ async function aAzul(input) {
     const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 
     // parte neutra: blanco → azul, gris/negro → blanco
-    const t = curva(1 - lum);
+    const v = sinSombras ? Math.max(0, (UMBRAL_SOMBRA - lum) / UMBRAL_SOMBRA) : 1 - lum;
+    const t = curva(v);
     // peso del color de especialidad: 0 en grises, 1 en colores francos
     const c = Math.min(1, Math.max(0, (croma - 12) / 50));
 
@@ -44,7 +52,9 @@ module.exports = { aAzul, AZUL: "#1a2942" };
 
 if (require.main === module) {
   (async () => {
-    for (const archivo of process.argv.slice(2)) {
+    const args = process.argv.slice(2);
+    const sinSombras = args.includes("--sin-sombras");
+    for (const archivo of args.filter((a) => a !== "--sin-sombras")) {
       const { data } = await sharp(archivo).extract({ left: 0, top: 0, width: 1, height: 1 })
         .removeAlpha().raw().toBuffer({ resolveWithObject: true });
       if (data[0] < 240 || data[1] < 240 || data[2] < 240) {
@@ -53,7 +63,7 @@ if (require.main === module) {
       }
       const meta = await sharp(archivo).metadata();
       const calidad = meta.width <= 900 ? 80 : 82;
-      const buf = await (await aAzul(archivo)).webp({ quality: calidad }).toBuffer();
+      const buf = await (await aAzul(archivo, { sinSombras })).webp({ quality: calidad }).toBuffer();
       fs.writeFileSync(archivo, buf);
       console.log(`azul        ${archivo}`);
     }
