@@ -51,7 +51,7 @@ const grupos = categorias
                   type="button"
                   data-p={p.i}
                   data-i="0"
-                  aria-label={`Ver las láminas de ${p.titulo}`}
+                  aria-label={`Ver las imágenes de ${p.titulo}`}
                 >
                   <img
                     src={p.portada}
@@ -111,8 +111,7 @@ const grupos = categorias
                   >
                     <img src={v.thumb} alt={v.nombre} loading="lazy" decoding="async" />
                     <span class="galeria__pie">
-                      <strong>{v.codigo}</strong>
-                      {v.nombre}
+                      <strong>{v.nombre}</strong>
                       {v.detalle && <em>{v.detalle}</em>}
                     </span>
                   </button>
@@ -152,7 +151,7 @@ const grupos = categorias
     const v = lista[iAct];
     img.src = v.src;
     img.alt = v.nombre;
-    pie.textContent = `${v.codigo} · ${v.nombre}`;
+    pie.textContent = v.detalle ? `${v.nombre} · ${v.detalle}` : v.nombre;
   };
 
   const abrir = (p, i) => {
