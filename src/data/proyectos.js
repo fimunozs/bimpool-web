@@ -35,7 +35,7 @@ export const proyectos = [
       { k: "Niveles", v: "14, de subterráneo −8 a cubierta" },
       { k: "Estado", v: "En desarrollo" },
     ],
-    galeria: "Cuatro láminas: exteriores y una planta por nivel",
+    galeria: "Edificio clínico",
     vistas: conVersion(clinica),
   },
   {
@@ -61,7 +61,7 @@ export const proyectos = [
       { k: "Edificios", v: "16 del recinto aeroportuario" },
       { k: "Estado", v: "En desarrollo" },
     ],
-    galeria: "Cuatro láminas con los 16 edificios del recinto",
+    galeria: "Recinto aeroportuario",
     vistas: conVersion(scfa),
   },
 ];
