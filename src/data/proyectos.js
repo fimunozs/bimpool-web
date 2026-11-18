@@ -1,6 +1,13 @@
 import scfa from "./scfa.json";
 import clinica from "./clinica.json";
 
+// Versión de las imágenes: se agrega como ?v= a cada ruta para que el navegador y la caché
+// de Cloudflare no sigan mostrando la imagen anterior cuando se regeneran con el mismo nombre.
+// Subir el valor cada vez que se reprocesen las láminas o portadas.
+const IMG_V = "2026-11-18b";
+const v = (ruta) => `${ruta}?v=${IMG_V}`;
+const conVersion = (vistas) => vistas.map((x) => ({ ...x, src: v(x.src), thumb: v(x.thumb) }));
+
 // Un objeto por proyecto del portafolio. `categoria` es el id de un rubro de
 // src/data/categorias.js y decide bajo qué título aparece el caso. `vistas` son
 // las láminas que genera tools/brandkit/laminas.js; `portada` es la ruta de la
@@ -12,7 +19,7 @@ export const proyectos = [
     tag: "Salud",
     titulo: "Clínica y Centro Médico Dental",
     cliente: { nombre: "GITC", logo: "/clientes/gitc.png" },
-    portada: "/proyectos/clinica/portada.webp",
+    portada: v("/proyectos/clinica/portada.webp"),
     portadaPie: "Vista exterior noreste",
     parrafos: [
       "Modelamos la arquitectura y la estructura del edificio: catorce niveles, desde los ocho subterráneos hasta la cubierta, con recintos clínicos, mobiliario y equipamiento médico modelados pieza por pieza.",
@@ -29,7 +36,7 @@ export const proyectos = [
       { k: "Estado", v: "En desarrollo" },
     ],
     galeria: "Cuatro láminas: exteriores y una planta por nivel",
-    vistas: clinica,
+    vistas: conVersion(clinica),
   },
   {
     slug: "scfa",
@@ -37,7 +44,7 @@ export const proyectos = [
     tag: "Aeropuerto",
     titulo: "Aeropuerto Andrés Sabella",
     cliente: { nombre: "IDOM", logo: "/clientes/idom.png" },
-    portada: "/proyectos/scfa/portada.webp",
+    portada: v("/proyectos/scfa/portada.webp"),
     portadaPie: "Terminal de pasajeros",
     parrafos: [
       "Modelamos y coordinamos el sistema de corrientes débiles de los dieciséis edificios del recinto: desde el terminal de pasajeros y la torre de control hasta las subestaciones, el complejo de carga y los puestos de control.",
@@ -55,6 +62,6 @@ export const proyectos = [
       { k: "Estado", v: "En desarrollo" },
     ],
     galeria: "Cuatro láminas con los 16 edificios del recinto",
-    vistas: scfa,
+    vistas: conVersion(scfa),
   },
 ];
