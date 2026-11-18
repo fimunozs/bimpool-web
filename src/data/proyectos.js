@@ -4,7 +4,7 @@ import clinica from "./clinica.json";
 // Versión de las imágenes: se agrega como ?v= a cada ruta para que el navegador y la caché
 // de Cloudflare no sigan mostrando la imagen anterior cuando se regeneran con el mismo nombre.
 // Subir el valor cada vez que se reprocesen las láminas o portadas.
-const IMG_V = "2026-11-18b";
+const IMG_V = "2026-11-18c";
 const v = (ruta) => `${ruta}?v=${IMG_V}`;
 const conVersion = (vistas) => vistas.map((x) => ({ ...x, src: v(x.src), thumb: v(x.thumb) }));
 

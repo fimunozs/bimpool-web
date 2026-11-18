@@ -8,6 +8,9 @@
 // proyecta sobre el plano horizontal, pasan a fondo azul en vez de verse como una mancha.
 // Usar solo en vistas de arquitectura; en las de especialidad la arquitectura tenue es gris claro.
 //
+// --intensidad=<0..1> (o `{ intensidad }`): tope del blanco de la línea neutra. 1 = blanco pleno;
+// 0,5 deja la arquitectura en un gris azulado similar al que tiene en las vistas de SCFA.
+//
 // También se exporta `aAzul(buffer)` para que laminas.js lo aplique al componer.
 // El CLI omite las imágenes cuya esquina ya no es blanca, para no invertirlas dos veces.
 const fs = require("fs");
@@ -23,7 +26,7 @@ const curva = (v) => Math.pow(Math.min(1, v * 2.2), 0.85);
 // Luminancia desde la que un gris se considera sombra (~217/255; las sombras de INO4 rondan 229)
 const UMBRAL_SOMBRA = 0.85;
 
-async function aAzul(input, { sinSombras = false } = {}) {
+async function aAzul(input, { sinSombras = false, intensidad = 1 } = {}) {
   const { data, info } = await sharp(input).flatten({ background: "#ffffff" })
     .removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const out = Buffer.alloc(data.length);
@@ -36,7 +39,7 @@ async function aAzul(input, { sinSombras = false } = {}) {
 
     // parte neutra: blanco → azul, gris/negro → blanco
     const v = sinSombras ? Math.max(0, (UMBRAL_SOMBRA - lum) / UMBRAL_SOMBRA) : 1 - lum;
-    const t = curva(v);
+    const t = curva(v) * intensidad;
     // peso del color de especialidad: 0 en grises, 1 en colores francos
     const c = Math.min(1, Math.max(0, (croma - 12) / 50));
 
@@ -54,7 +57,9 @@ if (require.main === module) {
   (async () => {
     const args = process.argv.slice(2);
     const sinSombras = args.includes("--sin-sombras");
-    for (const archivo of args.filter((a) => a !== "--sin-sombras")) {
+    const optInt = args.find((a) => a.startsWith("--intensidad="));
+    const intensidad = optInt ? Number(optInt.split("=")[1]) : 1;
+    for (const archivo of args.filter((a) => !a.startsWith("--"))) {
       const { data } = await sharp(archivo).extract({ left: 0, top: 0, width: 1, height: 1 })
         .removeAlpha().raw().toBuffer({ resolveWithObject: true });
       if (data[0] < 240 || data[1] < 240 || data[2] < 240) {
@@ -63,7 +68,7 @@ if (require.main === module) {
       }
       const meta = await sharp(archivo).metadata();
       const calidad = meta.width <= 900 ? 80 : 82;
-      const buf = await (await aAzul(archivo, { sinSombras })).webp({ quality: calidad }).toBuffer();
+      const buf = await (await aAzul(archivo, { sinSombras, intensidad })).webp({ quality: calidad }).toBuffer();
       fs.writeFileSync(archivo, buf);
       console.log(`azul        ${archivo}`);
     }
