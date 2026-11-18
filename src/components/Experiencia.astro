@@ -9,7 +9,7 @@ const { items, solo = false } = Astro.props;
 
 {items.length > 0 && (
   <div class={solo ? "exp exp--solo" : "exp"}>
-    <h5>Experiencia previa del equipo</h5>
+    <h5>Experiencia previa</h5>
 
     <ul class="exp__lista">
       {items.map((p) => (
