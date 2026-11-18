@@ -8,7 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
-const { aAzul } = require("./fondo-azul");
+const { aAzul, AZUL } = require("./fondo-azul");
 
 const CFG = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
 const ROOT = path.resolve(__dirname, "..", "..");
@@ -48,7 +48,12 @@ const etiqueta = (x, y, texto) =>
   // portada: una sola vista, a resolución completa
   if (CFG.portada) {
     const buf = await vista(CFG.portada);
-    const azul = await (await aAzul(buf, { sinSombras: CFG.sinSombras, intensidad: CFG.intensidad ?? 1 })).png().toBuffer();
+    let azul = await (await aAzul(buf, { sinSombras: CFG.sinSombras, intensidad: CFG.intensidad ?? 1 })).png().toBuffer();
+    // sin sombras queda fondo sobrante donde estaban: se recorta de nuevo y se centra con margen parejo
+    if (CFG.sinSombras) {
+      azul = await sharp(azul).trim({ background: AZUL, threshold: 30 })
+        .extend({ top: 60, bottom: 60, left: 60, right: 60, background: AZUL }).png().toBuffer();
+    }
     await sharp(azul).resize({ width: 1800, withoutEnlargement: true }).webp({ quality: 82 })
       .toFile(path.join(OUT_IMG, "portada.webp"));
     console.log(`portada     ${CFG.portada}`);
