@@ -7,4 +7,4 @@
 // Al cambiarlo hay que tocar también vercel.json, que es JSON y no puede leer esta
 // constante: ahí vive la cabecera X-Robots-Tag que cubre imágenes y archivos sueltos.
 // Los tres lugares están listados en CLAUDE.md.
-export const INDEXABLE = false;
+export const INDEXABLE = true;

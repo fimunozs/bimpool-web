@@ -96,9 +96,8 @@ El proyecto de Vercel y su `vercel.json` siguen en el repo hasta confirmar que C
 
 ## Visibilidad en buscadores
 
-El sitio está **bloqueado para los buscadores** mientras bimpool no quiera difundirlo
-(decisión del 02-10-2026; tampoco aparece la URL en LinkedIn). Tres piezas, un solo
-interruptor y una excepción:
+El sitio está **abierto a los buscadores** desde el 18-11-2026 (antes estuvo bloqueado por
+decisión del 02-10-2026). El bloqueo usa tres piezas, un solo interruptor y una excepción:
 
 | Dónde | Qué hace |
 |---|---|
@@ -107,9 +106,9 @@ interruptor y una excepción:
 | `src/pages/robots.txt.js` | Genera el `robots.txt`: `Disallow: /` cuando está bloqueado. |
 | `public/_headers` | Cabecera `X-Robots-Tag: noindex, nofollow` en **todas** las respuestas de Cloudflare Pages — cubre imágenes y archivos, que no tienen `<head>`. **Es un archivo estático y no lee `INDEXABLE`: hay que editarlo a mano.** |
 
-Para abrir el sitio a buscadores: poner `INDEXABLE = true` y, en el mismo commit, quitar
-el bloque de `public/_headers`. Si solo se cambia la constante, la cabecera sigue
-mandando y el sitio no se indexa igual.
+Para volver a bloquear: `INDEXABLE = false` y, en el mismo commit, restaurar el bloque
+comentado en `public/_headers`. `vercel.json` mantiene `noindex` a propósito: así la copia
+de Vercel (*.vercel.app) no compite con bimpool.cl como contenido duplicado.
 
 Ojo con el orden: `Disallow: /` impide que Google *lea* la página, y por lo tanto también
 el `noindex` del `<head>`. Una URL ya conocida puede seguir apareciendo como resultado sin

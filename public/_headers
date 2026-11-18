@@ -1,8 +1,7 @@
 # Cabeceras para Cloudflare Pages (el equivalente de vercel.json, que Cloudflare no lee).
 # Astro copia este archivo tal cual desde public/ a dist/, que es donde Pages lo busca.
 #
-# Mientras el sitio no deba salir en buscadores, esta cabecera cubre imágenes, PDF y
-# cualquier archivo que no tenga <head> donde poner un <meta name="robots">.
-# Al abrir el sitio hay que borrar este bloque Y poner INDEXABLE = true en src/consts.js.
-/*
-  X-Robots-Tag: noindex, nofollow
+# Sitio abierto a buscadores desde el 18-11-2026 (INDEXABLE = true en src/consts.js).
+# Para volver a bloquearlo: INDEXABLE = false y, en el mismo commit, restaurar aquí:
+# /*
+#   X-Robots-Tag: noindex, nofollow
