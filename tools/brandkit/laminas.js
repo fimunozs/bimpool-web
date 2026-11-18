@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
+const { aAzul } = require("./fondo-azul");
 
 const CFG = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
 const ROOT = path.resolve(__dirname, "..", "..");
@@ -47,7 +48,8 @@ const etiqueta = (x, y, texto) =>
   // portada: una sola vista, a resolución completa
   if (CFG.portada) {
     const buf = await vista(CFG.portada);
-    await sharp(buf).resize({ width: 1800, withoutEnlargement: true }).webp({ quality: 82 })
+    const azul = await (await aAzul(buf)).png().toBuffer();
+    await sharp(azul).resize({ width: 1800, withoutEnlargement: true }).webp({ quality: 82 })
       .toFile(path.join(OUT_IMG, "portada.webp"));
     console.log(`portada     ${CFG.portada}`);
   }
@@ -76,7 +78,7 @@ const etiqueta = (x, y, texto) =>
 
     const base = `lam-${String(i + 1).padStart(2, "0")}`;
     const hoja = await sharp({ create: { width: W, height: H, channels: 3, background: "#ffffff" } })
-      .composite(capas).png().toBuffer();
+      .composite(capas).png().toBuffer().then(async (b) => (await aAzul(b)).png().toBuffer());
 
     await sharp(hoja).resize({ width: 1800 }).webp({ quality: 82 }).toFile(path.join(OUT_IMG, `${base}.webp`));
     await sharp(hoja).resize({ width: 900 }).webp({ quality: 80 }).toFile(path.join(OUT_IMG, `${base}-thumb.webp`));
