@@ -59,7 +59,8 @@ imágenes ya exportadas; omite las que ya no tienen fondo blanco). Con `"sinSomb
 JSON (o `--sin-sombras` en el CLI) las sombras grises del plano horizontal pasan a fondo; se usa en
 `clinica`, no en `scfa`, donde la arquitectura tenue es justamente gris claro. `"intensidad": 0.5`
 (o `--intensidad=0.5`) baja la línea de arquitectura de blanco pleno a un gris azulado como el de
-`scfa`; `clinica` lo usa. Tras reprocesar imágenes, subir `IMG_V` en `src/data/proyectos.js`. `proyecto-imagenes.js` sigue sirviendo para exportar vistas sueltas, pero
+`scfa`; `clinica` lo usa. `"adelgazarPortada": 1` (o `--adelgazar=1`) afina la línea de la portada.
+Tras reprocesar imágenes, subir `IMG_V` en `src/data/proyectos.js`. `proyecto-imagenes.js` sigue sirviendo para exportar vistas sueltas, pero
 el sitio consume las láminas.
 
 ### Logotipos de cliente

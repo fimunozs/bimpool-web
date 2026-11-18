@@ -4,6 +4,7 @@
   "portada": "EXT-NE",
   "sinSombras": true,
   "intensidad": 0.5,
+  "adelgazarPortada": 1,
   "laminas": [
     { "codigo": "L-01", "nombre": "Vistas exteriores", "detalle": "Las cuatro esquinas del volumen",
       "vistas": ["EXT-NE", "EXT-NW", "EXT-SW", "EXT-SE"] },

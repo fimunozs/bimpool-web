@@ -48,7 +48,7 @@ const etiqueta = (x, y, texto) =>
   // portada: una sola vista, a resolución completa
   if (CFG.portada) {
     const buf = await vista(CFG.portada);
-    let azul = await (await aAzul(buf, { sinSombras: CFG.sinSombras, intensidad: CFG.intensidad ?? 1 })).png().toBuffer();
+    let azul = await (await aAzul(buf, { sinSombras: CFG.sinSombras, intensidad: CFG.intensidad ?? 1, adelgazar: CFG.adelgazarPortada ?? 0 })).png().toBuffer();
     // sin sombras queda fondo sobrante donde estaban: se recorta de nuevo y se centra con margen parejo
     if (CFG.sinSombras) {
       azul = await sharp(azul).trim({ background: AZUL, threshold: 30 })

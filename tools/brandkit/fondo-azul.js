@@ -11,6 +11,9 @@
 // --intensidad=<0..1> (o `{ intensidad }`): tope del blanco de la línea neutra. 1 = blanco pleno;
 // 0,5 deja la arquitectura en un gris azulado similar al que tiene en las vistas de SCFA.
 //
+// --adelgazar=<px> (o `{ adelgazar }`): adelgaza la línea quitándole <px> por cada borde
+// (erosión de la línea oscura sobre el original blanco, antes de pasar a azul).
+//
 // También se exporta `aAzul(buffer)` para que laminas.js lo aplique al componer.
 // El CLI omite las imágenes cuya esquina ya no es blanca, para no invertirlas dos veces.
 const fs = require("fs");
@@ -26,9 +29,39 @@ const curva = (v) => Math.pow(Math.min(1, v * 2.2), 0.85);
 // Luminancia desde la que un gris se considera sombra (~217/255; las sombras de INO4 rondan 229)
 const UMBRAL_SOMBRA = 0.85;
 
-async function aAzul(input, { sinSombras = false, intensidad = 1 } = {}) {
+// Erosión de la línea oscura: cada píxel toma el valor más claro de su entorno (2r+1)².
+function erosionarLinea(data, w, h, r) {
+  for (let paso = 0; paso < r; paso++) {
+    const src = Buffer.from(data);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        for (let k = 0; k < 3; k++) {
+          let m = 0;
+          for (let dy = -1; dy <= 1; dy++) {
+            const yy = Math.min(h - 1, Math.max(0, y + dy));
+            for (let dx = -1; dx <= 1; dx++) {
+              const xx = Math.min(w - 1, Math.max(0, x + dx));
+              const val = src[(yy * w + xx) * 3 + k];
+              if (val > m) m = val;
+            }
+          }
+          data[(y * w + x) * 3 + k] = m;
+        }
+      }
+    }
+  }
+}
+
+async function aAzul(input, { sinSombras = false, intensidad = 1, adelgazar = 0 } = {}) {
   const { data, info } = await sharp(input).flatten({ background: "#ffffff" })
     .removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  if (adelgazar > 0) {
+    // mezcla con el original para que las líneas finas no se corten: los bordes se aclaran,
+    // el núcleo de la línea se mantiene
+    const orig = Buffer.from(data);
+    erosionarLinea(data, info.width, info.height, Math.ceil(adelgazar));
+    for (let i = 0; i < data.length; i++) data[i] = Math.round(0.35 * orig[i] + 0.65 * data[i]);
+  }
   const out = Buffer.alloc(data.length);
 
   for (let i = 0; i < data.length; i += 3) {
@@ -59,6 +92,8 @@ if (require.main === module) {
     const sinSombras = args.includes("--sin-sombras");
     const optInt = args.find((a) => a.startsWith("--intensidad="));
     const intensidad = optInt ? Number(optInt.split("=")[1]) : 1;
+    const optAdel = args.find((a) => a.startsWith("--adelgazar="));
+    const adelgazar = optAdel ? Number(optAdel.split("=")[1]) : 0;
     for (const archivo of args.filter((a) => !a.startsWith("--"))) {
       const { data } = await sharp(archivo).extract({ left: 0, top: 0, width: 1, height: 1 })
         .removeAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -68,7 +103,7 @@ if (require.main === module) {
       }
       const meta = await sharp(archivo).metadata();
       const calidad = meta.width <= 900 ? 80 : 82;
-      const buf = await (await aAzul(archivo, { sinSombras, intensidad })).webp({ quality: calidad }).toBuffer();
+      const buf = await (await aAzul(archivo, { sinSombras, intensidad, adelgazar })).webp({ quality: calidad }).toBuffer();
       fs.writeFileSync(archivo, buf);
       console.log(`azul        ${archivo}`);
     }
