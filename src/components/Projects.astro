@@ -191,7 +191,7 @@ const grupos = categorias
     align-items: baseline;
     gap: 0.9rem;
     padding-bottom: 0.9rem;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--secondary);
   }
   .rubro__n {
     font-size: 0.78rem;
@@ -203,7 +203,7 @@ const grupos = categorias
   .rubro__head h3 {
     margin: 0;
     font-size: clamp(1.15rem, 2vw, 1.5rem);
-    color: var(--primary);
+    color: var(--heading);
     letter-spacing: -0.01em;
   }
 
@@ -223,7 +223,7 @@ const grupos = categorias
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.75rem;
-    background: #fff;
+    background: var(--surface);
   }
   .caso__portada { margin: 0; }
   .caso__portada img { width: 100%; height: auto; border-radius: 8px; background: var(--primary); }
@@ -237,7 +237,7 @@ const grupos = categorias
   .caso__tag {
     display: inline-block;
     background: var(--accent-soft);
-    color: var(--accent-dark);
+    color: var(--accent);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -249,7 +249,7 @@ const grupos = categorias
   .caso__info h4 {
     margin: 0;
     font-size: clamp(1.4rem, 2.4vw, 1.9rem);
-    color: var(--primary);
+    color: var(--heading);
     letter-spacing: -0.015em;
   }
 
@@ -262,7 +262,7 @@ const grupos = categorias
     padding: 0.3rem 0.55rem;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: var(--neutral);
+    background: var(--surface);
     width: fit-content;
   }
   .cliente__label {
@@ -278,6 +278,7 @@ const grupos = categorias
     height: 11px;
     width: auto;
     opacity: 0.75;
+    filter: invert(1);   /* silueta negra → blanca sobre el fondo azul */
   }
 
   .caso__resumen { margin-top: 1rem; color: var(--muted); font-size: 0.97rem; }
@@ -311,7 +312,7 @@ const grupos = categorias
     font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: var(--primary);
+    color: var(--heading);
   }
   .alcance span {
     grid-column: 2;
@@ -339,7 +340,7 @@ const grupos = categorias
     text-transform: uppercase;
     color: var(--muted);
   }
-  .caso__ficha dd { margin: 0; font-size: 0.92rem; font-weight: 600; color: var(--primary); }
+  .caso__ficha dd { margin: 0; font-size: 0.92rem; font-weight: 600; color: var(--heading); }
 
   /* ---------- galería ---------- */
   .galeria-head {
@@ -350,7 +351,7 @@ const grupos = categorias
     flex-wrap: wrap;
     margin: 2.5rem 0 1.25rem;
   }
-  .galeria-head h5 { margin: 0; font-size: 1.05rem; color: var(--primary); }
+  .galeria-head h5 { margin: 0; font-size: 1.05rem; color: var(--heading); }
   .galeria-head span { font-size: 0.85rem; color: var(--muted); }
 
   .galeria {
@@ -371,7 +372,7 @@ const grupos = categorias
   }
   .galeria__pie strong {
     display: block;
-    color: var(--accent-dark);
+    color: var(--accent);
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     margin-bottom: 0.15rem;
@@ -393,7 +394,7 @@ const grupos = categorias
     border: 1px solid var(--line);
     border-radius: 10px;
     overflow: hidden;
-    background: #fff;
+    background: var(--surface);
     cursor: zoom-in;
     text-align: left;
     font: inherit;

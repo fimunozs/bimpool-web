@@ -124,8 +124,12 @@ Paleta corporativa (tokens en `src/styles/global.css`, no usar hex sueltos en co
 | Principal 60% | `--primary` | `#1A2942` | hero, footer, títulos, panel "Nosotros" |
 | Secundario 30% | `--secondary` | `#A7B0BF` | texto sobre fondo oscuro, portadas |
 | Acento 10% | `--accent` | `#FF6B35` | botones, eyebrows, punto del isotipo |
-| Acento texto | `--accent-dark` | `#D9501F` | naranja para texto pequeño sobre blanco (contraste AA) |
+| Acento hover | `--accent-dark` | `#D9501F` | hover de botones (sobre el fondo azul el texto naranja usa `--accent`) |
 | Neutro | `--neutral` | `#F7F9FC` | fondo de secciones alternas |
+
+Tema: **fondo azul institucional** en todo el sitio (desde 26-11-2026). `--bg` = `--primary`,
+`--bg-soft` = `#1F304D` (secciones alternas), `--surface` para tarjetas, texto `--ink`/`--heading` blanco
+y `--muted` gris azulado. Logos de cliente se invierten a blanco con `filter: invert(1)`.
 
 Tipografía del sitio: **DM Sans** (Google Fonts), la misma del wordmark.
 

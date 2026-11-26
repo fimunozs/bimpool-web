@@ -1,18 +1,22 @@
 :root {
+  color-scheme: dark;
   /* Paleta corporativa BIMpool */
   --primary: #1a2942;        /* Azul petróleo profundo — 60% */
   --primary-2: #24375a;      /* variante clara del principal (gradientes) */
   --secondary: #a7b0bf;      /* Gris azulado claro — 30% */
   --accent: #ff6b35;         /* Naranja BIM vibrante — 10% */
-  --accent-dark: #d9501f;    /* naranja para texto pequeño sobre blanco (contraste AA) */
-  --accent-soft: #ffede5;    /* fondo suave de iconos */
+  --accent-dark: #d9501f;    /* naranja más oscuro: hover de botones */
+  --accent-soft: rgba(255, 107, 53, 0.16); /* fondo suave de iconos y etiquetas */
   --neutral: #f7f9fc;        /* Blanco frío */
 
-  --ink: #1a2942;
-  --muted: #5f6b80;
-  --line: #dde2ea;
-  --bg: #ffffff;
-  --bg-soft: var(--neutral);
+  /* Tema: fondo azul institucional, texto claro */
+  --ink: #ffffff;
+  --heading: #ffffff;
+  --muted: #a7b0bf;
+  --line: rgba(255, 255, 255, 0.12);
+  --bg: var(--primary);
+  --bg-soft: #1f304d;        /* secciones alternas: un punto más claro que --primary */
+  --surface: rgba(255, 255, 255, 0.05); /* tarjetas y recuadros */
   --radius: 14px;
   --max: 1160px;
   --font: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -43,10 +47,10 @@ p { margin: 0; }
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-dark);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
-.section-head h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); color: var(--primary); }
+.section-head h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); color: var(--heading); }
 .section-head p { margin-top: 1rem; color: var(--muted); font-size: 1.05rem; }
 
 .btn {
@@ -66,20 +70,20 @@ p { margin: 0; }
 .btn--primary:hover { background: var(--accent-dark); }
 .btn--ghost { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
 .btn--ghost:hover { border-color: #fff; }
-.btn--outline { border-color: var(--primary); color: var(--primary); }
-.btn--outline:hover { background: var(--primary); color: #fff; }
+.btn--outline { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
+.btn--outline:hover { border-color: #fff; }
 
 .grid { display: grid; gap: 1.5rem; }
 .grid--3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid--4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
 .card {
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.75rem;
 }
-.card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 0.6rem; }
+.card h3 { font-size: 1.15rem; color: var(--heading); margin-bottom: 0.6rem; }
 .card p { color: var(--muted); font-size: 0.97rem; }
 
 @media (max-width: 720px) {
